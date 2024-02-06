@@ -49,6 +49,18 @@ DELIMITER ;
 
 select DNI_Existe(p.DNI) as Nombre FROM cliente p;
 -- ----------------------------- USUARIO 
+
+DELIMITER //
+CREATE FUNCTION Usuario_Existe(p_usuario VARCHAR(100)) 
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE userCount INT;
+    SELECT COUNT(*) INTO userCount
+    FROM mysql.user
+    WHERE User = p_usuario;
+    RETURN userCount > 0;
+END;
+//
 DELIMITER //
 
 CREATE PROCEDURE CrearUsuario(
@@ -56,17 +68,23 @@ CREATE PROCEDURE CrearUsuario(
     IN p_contraseña VARCHAR(100)
 )
 BEGIN
+	declare extistU bool;
+    set extistU = Usuario_Existe(extistU);
     -- Crear el usuario
     SET @create_user_sql := CONCAT('CREATE USER ''', p_usuario, ''' IDENTIFIED BY ''', p_contraseña, ''';');
-    PREPARE create_user_stmt FROM @create_user_sql;
-    EXECUTE create_user_stmt;
-    DEALLOCATE PREPARE create_user_stmt;
+    IF NOT extistU THEN
+		PREPARE create_user_stmt FROM @create_user_sql;
+		EXECUTE create_user_stmt;
+		DEALLOCATE PREPARE create_user_stmt;
 
-    -- Otorgar privilegios
-    GRANT ALL PRIVILEGES ON cliente.* TO p_usuario;
-    GRANT ALL PRIVILEGES ON citas.* TO p_usuario;
-    GRANT ALL PRIVILEGES ON auto.* TO p_usuario;
-    GRANT ALL PRIVILEGES ON membresia.* TO p_usuario;
+		-- Otorgar privilegios
+		GRANT ALL PRIVILEGES ON cliente.* TO p_usuario;
+		GRANT ALL PRIVILEGES ON citas.* TO p_usuario;
+		GRANT ALL PRIVILEGES ON auto.* TO p_usuario;
+		GRANT ALL PRIVILEGES ON membresia.* TO p_usuario;
+	else
+		select "El usuario ya existe";
+	end if;
 
     -- Actualizar privilegios
     FLUSH PRIVILEGES;
@@ -74,8 +92,8 @@ END //
 
 DELIMITER ;
 
-
 -- ----------------------------------------------CREAR CLIENTE
+
 DELIMITER //
 drop procedure if exists Insertar_Cliente;
 CREATE PROCEDURE Insertar_Cliente(
@@ -93,9 +111,9 @@ CREATE PROCEDURE Insertar_Cliente(
 )
 BEGIN
     DECLARE dniExists BOOLEAN;
-    DECLARE COD INT;
+    DECLARE COD BIGINT;
     SET dniExists = DNI_Existe(c_DNI);
-    SET COD = CONCAT(YEAR(CURDATE())-2000, c_DNI);
+    SET COD = c_DNI- YEAR(CURDATE())-2000;
 
     IF NOT dniExists THEN
         INSERT INTO `cliente` (`codCliente`,`DNI`,`nombres`,`primerApellido`,`segundoApellido`,`fecNacimiento`,`sexo`,`telefono`,`correo`,`direccion`) 
@@ -111,7 +129,7 @@ BEGIN
 END //
 
 DELIMITER ;
-CALL Insertar_Cliente(1234556, "A", "B", "C", CURDATE(), "F", "911", "a@gmail.com", "Calee", "nombre_usuario", "contraseña_usuario");
+CALL Insertar_Cliente(73909090, "A", "B", "C", CURDATE(), "F", "911", "a@gmail.com", "Calee", "nombre_usuario", "contraseña_usuario");
 
 -- --------------------------------------------MODIFICAR DATOS------------------------
 
