@@ -28,7 +28,7 @@ def insertCliente():
     direccion = request.form['direccion']
     usuario = request.form["usuario"]
     password = request.form['password']
-    Model.insertCliente(conexion, dni, nombres, primerApellido, segundoApellido, fecNacimiento, sexo, telefono, correo, direccion, usuario, password)
+    a = Model.insertCliente(conexion, dni, nombres, primerApellido, segundoApellido, fecNacimiento, sexo, telefono, correo, direccion, usuario, password)
 
     return "exito"
 

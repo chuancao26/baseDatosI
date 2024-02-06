@@ -14,9 +14,6 @@ BEGIN
 END;
 //
 DELIMITER ;
-
-CALL MarcarEntrada(1);
-
 DELIMITER //
 drop procedure if exists MarcarSalida//
 CREATE PROCEDURE MarcarSalida(
@@ -68,8 +65,11 @@ CREATE PROCEDURE CrearUsuario(
     IN p_contraseña VARCHAR(100)
 )
 BEGIN
+	declare extistU bool;
+    set extistU = Usuario_Existe(extistU);
     -- Crear el usuario
-		SET @create_user_sql := CONCAT('CREATE USER ''', p_usuario, '''@localhost IDENTIFIED BY ''', p_contraseña, ''';');
+    IF NOT extistU THEN
+		SET @create_user_sql := CONCAT('CREATE USER ''', p_usuario, ''' IDENTIFIED BY ''', p_contraseña, ''';');
 		PREPARE create_user_stmt FROM @create_user_sql;
 		EXECUTE create_user_stmt;
 		DEALLOCATE PREPARE create_user_stmt;
@@ -79,9 +79,46 @@ BEGIN
 		GRANT ALL PRIVILEGES ON citas.* TO p_usuario;
 		GRANT ALL PRIVILEGES ON auto.* TO p_usuario;
 		GRANT ALL PRIVILEGES ON membresia.* TO p_usuario;
+	else
+		select "El usuario ya existe";
+	end if;
 
     -- Actualizar privilegios
     FLUSH PRIVILEGES;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE crear_usuario (
+    IN p_nombre_usuario VARCHAR(50),
+    IN p_contrasena VARCHAR(50)
+)
+BEGIN
+    DECLARE usuario_existente INT;
+
+    -- Verificar si el usuario ya existe
+    SELECT COUNT(*) INTO usuario_existente
+    FROM mysql.user
+    WHERE user = p_nombre_usuario;
+
+    -- Si el usuario no existe, crearlo
+    IF usuario_existente = 0 THEN
+        SET @sql = CONCAT('CREATE USER ''', p_nombre_usuario, '''@''localhost'' IDENTIFIED BY ''', p_contrasena, '''');
+        PREPARE stmt FROM @sql;
+        EXECUTE stmt;
+        DEALLOCATE PREPARE stmt;
+        
+        -- Asignar privilegios
+        SET @sql = CONCAT('GRANT ALL PRIVILEGES ON *.* TO ''', p_nombre_usuario, '''@''localhost''');
+        PREPARE stmt FROM @sql;
+        EXECUTE stmt;
+        DEALLOCATE PREPARE stmt;
+        
+        SELECT 'Usuario creado exitosamente.' AS mensaje;
+    ELSE
+        SELECT 'El usuario ya existe.' AS mensaje;
+    END IF;
 END //
 
 DELIMITER ;
@@ -114,7 +151,7 @@ BEGIN
         VALUES (COD, c_DNI, c_Nombres, c_PrimerApellido, c_SegundoApellido, c_fechNacimiento, c_Sexo, c_Telefono, c_correo, c_direccion);
 
         -- Llamar al procedimiento para crear el usuario
-        CALL CrearUsuario(c_usuario, c_contraseña);
+        CALL crear_usuario(c_usuario, c_contraseña);
 
         SELECT 'Cliente insertado correctamente y usuario creado.' AS Status;
     ELSE

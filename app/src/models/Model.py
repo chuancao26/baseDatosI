@@ -9,5 +9,4 @@ class Model():
         cursor.execute(sql,(dni, nombres, primer_apellido, 
                             segundo_apellido, fec_nacimiento, sexo, 
                             telefono, correo, direccion, usuario, password))
-        db.connection.commit()
-        return True
+        return cursor.fetchall()
