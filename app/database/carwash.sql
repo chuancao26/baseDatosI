@@ -118,6 +118,7 @@ CREATE TABLE `maquina` (
   `precio` DECIMAL(10,2),
   `estaOperativa` bit,
   `codProveedor` INTEGER,
+  `codLugar` INTEGER,
   PRIMARY KEY (`codMaquina`)
 );
 
@@ -200,6 +201,7 @@ ALTER TABLE `proveedor` ADD FOREIGN KEY (codRepresentante) REFERENCES `represent
 ALTER TABLE `proveedor_utensilio` ADD FOREIGN KEY (codProveedor) REFERENCES `proveedor` (`codProveedor`);
 ALTER TABLE `proveedor_utensilio` ADD FOREIGN KEY (codUtensilio) REFERENCES `utensilio` (`codUtensilio`);
 ALTER TABLE `maquina` ADD FOREIGN KEY (codProveedor) REFERENCES `proveedor` (`codProveedor`);
+ALTER TABLE `maquina` ADD FOREIGN KEY (codLugar) REFERENCES `lugar` (`codLugar`);
 ALTER TABLE `auto` ADD FOREIGN KEY (codCliente) REFERENCES `cliente` (`codCliente`);
 ALTER TABLE `factura` ADD FOREIGN KEY (codCita) REFERENCES `cita` (`codCita`);
 ALTER TABLE `servicio_lugar` ADD FOREIGN KEY (codServicio) REFERENCES `servicio` (`codServicio`);
