@@ -1,0 +1,76 @@
+{% extends './base.html' %}
+{%block title%}Formulario Empleado{% endblock %}
+{% block customCSS %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/formulario.css')}}">
+{% endblock %}
+{% block body %}
+<div class="container mt-5">
+    <form>
+      <div class="mb-3">
+        <label for="codEmpleado" class="form-label">Ingrese los siguientes datos:</label>
+      </div>
+      <div class="mb-3">
+        <label for="DNI" class="form-label">DNI</label>
+        <input type="number" class="form-control" id="DNI" name="DNI" pattern="\d+" placeholder="Ingrese su DNI" required>
+      </div>
+      <div class="mb-3">
+        <label for="nombres" class="form-label">Nombres</label>
+        <input type="text" class="form-control" id="nombres" name="nombres" pattern="[A-Za-záéíóúüñÑ\s]+" placeholder="Ingrese sus nombres"  required>
+      </div>
+      <div class="mb-3">
+        <label for="primerApellido" class="form-label">Primer Apellido</label>
+        <input type="text" class="form-control" id="primerApellido" name="primerApellido" pattern="[A-Za-záéíóúüñÑ\s]+" placeholder="Ingrese su primer apellido"  required>
+      </div>
+      <div class="mb-3">
+        <label for="segundoApellido" class="form-label">Segundo Apellido</label>
+        <input type="text" class="form-control" id="segundoApellido" name="segundoApellido" pattern="[A-Za-záéíóúüñÑ\s]+" placeholder="Ingrese su segundo apellido" required>
+      </div>
+      <div class="mb-3">
+        <label for="fecNacimiento" class="form-label">Fecha de Nacimiento</label>
+        <input type="date" class="form-control" id="fecNacimiento" name="fecNacimiento" min="1900-01-01" required>
+      </div>
+      <div class="mb-3">
+        <label for="sexo" class="form-label">Sexo</label>
+        <select class="form-select" id="sexo" name="sexo" required>
+          <option value="femenino">Femenino</option>
+          <option value="masculino">Masculino</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="telefono" class="form-label">Teléfono</label>
+        <input type="tel" class="form-control" id="telefono" name="telefono" pattern="\d+" placeholder="Ingrese su teléfono"  required>
+      </div>
+      <div class="mb-3">
+        <label for="correo" class="form-label">Correo</label>
+        <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese su correo" required>
+      </div>
+      <div class="mb-3">
+        <label for="direccion" class="form-label">Dirección</label>
+        <textarea class="form-control" id="direccion" name="direccion" placeholder="Ingrese su dirección" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="salario" class="form-label">Salario</label>
+        <input type="number" class="form-control" id="salario" name="salario" step="0.01" placeholder="Ingrese su salario" required>
+      </div>
+      <div class="mb-3">
+        <label for="puesto" class="form-label">Puesto</label>
+        <input type="text" class="form-control" id="puesto" name="puesto" placeholder="Ingrese su puesto"  required>
+      </div>
+      <div class="mb-3">
+        <label for="aniosExperiencia" class="form-label">Años de Experiencia</label>
+        <input type="number" class="form-control" id="aniosExperiencia" name="aniosExperiencia" placeholder="Ingrese sus años de experiencia"  required>
+      </div>
+      <div class="mb-3">
+        <label for="codHorario" class="form-label">Código de Horario</label>
+        <input type="text" class="form-control" id="codHorario" name="codHorario" placeholder="Ingrese el código de horario" required>
+      </div>
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+      <div class="mb-3">
+        <a href="#" class="btn btn-secondary">Atrás</a>
+      </div>
+    </form>
+  </div>
+  
+{% endblock %}
