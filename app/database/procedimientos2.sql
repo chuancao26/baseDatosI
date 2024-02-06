@@ -71,8 +71,8 @@ BEGIN
 	declare extistU bool;
     set extistU = Usuario_Existe(extistU);
     -- Crear el usuario
-    SET @create_user_sql := CONCAT('CREATE USER ''', p_usuario, ''' IDENTIFIED BY ''', p_contraseña, ''';');
     IF NOT extistU THEN
+		SET @create_user_sql := CONCAT('CREATE USER ''', p_usuario, ''' IDENTIFIED BY ''', p_contraseña, ''';');
 		PREPARE create_user_stmt FROM @create_user_sql;
 		EXECUTE create_user_stmt;
 		DEALLOCATE PREPARE create_user_stmt;
