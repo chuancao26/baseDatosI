@@ -12,12 +12,15 @@ conexion = MySQL(app)
 def login():
     return render_template('login.html')
 @app.route('/ClienteFormulario')
-
 def ClienteFormulario():
     return render_template("formCliente.html")
+
 @app.route('/insertCliente', methods=['GET', 'POST'])
 def insertCliente():
     dni = request.form['DNI']
+    if Model.findDNI(conexion, dni):
+        flash("Dni ya registrado!")
+        return render_template("formCliente.html")
     nombres = request.form['nombres']
     primerApellido = request.form['primerApellido'] 
     segundoApellido = request.form['segundoApellido'] 
@@ -27,10 +30,12 @@ def insertCliente():
     correo = request.form['correo'] 
     direccion = request.form['direccion']
     usuario = request.form["usuario"]
+    if Model.findUser(conexion, usuario):
+        flash("usuario ya registrado!")
+        return render_template("formCliente.html")
     password = request.form['password']
-    a = Model.insertCliente(conexion, dni, nombres, primerApellido, segundoApellido, fecNacimiento, sexo, telefono, correo, direccion, usuario, password)
-
-    return "exito"
+    Model.insertCliente(conexion, dni, nombres, primerApellido, segundoApellido, fecNacimiento, sexo, telefono, correo, direccion, usuario, password)
+    return redirect(url_for('login'))
 
 
 

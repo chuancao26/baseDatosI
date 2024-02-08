@@ -10,6 +10,17 @@
         <div class="mb-3">
             <label for="codCliente" class="form-label">Bienvenido, Ingrese los siguientes datos:</label>
         </div>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-primary alert-dismissible" role="alert">
+            <strong>{{ message }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
         <div class="mb-3">
             <label for="DNI" class="form-label">DNI</label>
             <input type="number" class="form-control" id="DNI" name="DNI" pattern="\d+" placeholder="Ingrese su DNI" required>
@@ -65,7 +76,7 @@
             <button type="submit" class="btn btn-primary">Guardar</button>
           </div>
           <div class="mb-3">
-            <a href="#" class="btn btn-secondary">Atrás</a>
+            <a href="{{ url_for("login")}}" class="btn btn-secondary">Atrás</a>
           </div>
     </form>
   </div>

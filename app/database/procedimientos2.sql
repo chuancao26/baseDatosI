@@ -47,7 +47,6 @@ END;
 //
 DELIMITER ;
 
-select DNI_Existe(p.DNI) as Nombre FROM cliente p;
 -- ----------------------------- USUARIO 
 
 DELIMITER //
@@ -189,12 +188,6 @@ DELIMITER ;
 
 -- --------------------------------------- crear cliente
 
-INSERT INTO membresia (codMembresia, nombre, descripcion, precio, duracion)
-VALUES
-  (1, 'Membresia Estándar', 'Acceso básico', 19.99, '5:000:00'),
-  (2, 'Membresia Premium', 'Acceso completo', 49.99, '10:00:00'),
-  (3, 'Membresia VIP', 'Acceso exclusivo', 99.99, '20:00:00');
-  
 DELIMITER //
 drop procedure if exists CrearClienteMembresia//
 CREATE PROCEDURE CrearClienteMembresia(
@@ -230,7 +223,6 @@ END;
 //
 DELIMITER ;
 
-call CrearClienteMembresia(24123,1);
 -- --------------------------------------------------------------------BUSCAR PLACA
 DELIMITER //
 drop function if exists Placa_Existe//
@@ -319,7 +311,6 @@ BEGIN
 END;
 //
 DELIMITER ;
-CALL MostrarMisAuto(24123);
 
 -- ---------------------------------- Insertar empleado
 DELIMITER //
@@ -382,7 +373,6 @@ BEGIN
 END;
 //
 DELIMITER ;
-call Insertar_Empleado(1,123444,"A","B","C",curdate(),"F","911","a@gmail.com", "Calee", 12.33, "nADA", 2, 1);
 
 -- HORARIO
 

@@ -31,7 +31,9 @@ CREATE TABLE `cliente` (
   `telefono` CHAR(12),
   `correo` VARCHAR(100),
   `direccion` VARCHAR(100),
-  PRIMARY KEY (`codCliente`)
+  PRIMARY KEY (`codCliente`),
+  usuario varchar(55),
+  password char(255)
 );
 
 CREATE TABLE `representante` (

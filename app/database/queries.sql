@@ -28,7 +28,6 @@ END;
 //
 DELIMITER ;
 
-CALL MarcarSalida(1,10);
 -- --------------------------------- un DNI existe?
 DELIMITER //
 drop function if exists DNI_Existe//
@@ -44,7 +43,6 @@ END;
 //
 DELIMITER ;
 
-select DNI_Existe(p.DNI) as Nombre FROM cliente p;
 -- ----------------------------- USUARIO 
 
 DELIMITER //
@@ -147,8 +145,8 @@ BEGIN
     SET COD = c_DNI- YEAR(CURDATE())-2000;
 
     IF NOT dniExists THEN
-        INSERT INTO `cliente` (`codCliente`,`DNI`,`nombres`,`primerApellido`,`segundoApellido`,`fecNacimiento`,`sexo`,`telefono`,`correo`,`direccion`) 
-        VALUES (COD, c_DNI, c_Nombres, c_PrimerApellido, c_SegundoApellido, c_fechNacimiento, c_Sexo, c_Telefono, c_correo, c_direccion);
+        INSERT INTO `cliente` (`codCliente`,`DNI`,`nombres`,`primerApellido`,`segundoApellido`,`fecNacimiento`,`sexo`,`telefono`,`correo`,`direccion`, usuario, password) 
+        VALUES (COD, c_DNI, c_Nombres, c_PrimerApellido, c_SegundoApellido, c_fechNacimiento, c_Sexo, c_Telefono, c_correo, c_direccion, c_usuario, c_contraseña);
 
         -- Llamar al procedimiento para crear el usuario
         CALL crear_usuario(c_usuario, c_contraseña);
@@ -160,3 +158,29 @@ BEGIN
 END //
 
 DELIMITER ;
+-- Consultar dni
+
+DELIMITER //
+drop procedure if exists buscarClientePorDNI//
+CREATE PROCEDURE buscarClientePorDNI(IN dni_param INT)
+BEGIN
+    SELECT *
+    FROM cliente
+    WHERE dni = dni_param;
+END//
+
+DELIMITER ;
+
+-- Consultar si usuario existe
+
+DELIMITER //
+drop procedure if exists buscarUsuario//
+CREATE PROCEDURE buscarUsuario(IN user VARCHAR(55))
+BEGIN
+    SELECT usuario
+    FROM cliente
+    WHERE usuario = user;
+END//
+
+DELIMITER ;
+
