@@ -32,8 +32,7 @@ CREATE TABLE `cliente` (
   `correo` VARCHAR(100),
   `direccion` VARCHAR(100),
   PRIMARY KEY (`codCliente`),
-  usuario varchar(55),
-  password char(255)
+  usuario varchar(55)
 );
 
 CREATE TABLE `representante` (

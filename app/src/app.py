@@ -9,6 +9,12 @@ from config import config
 
 app = Flask(__name__)
 conexion = MySQL(app)
+
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = '2638'
+app.config['MYSQL_DB'] = 'carwash'
+
 login_manager_app = LoginManager(app)
 @login_manager_app.user_loader
 def load_user(id):
@@ -22,16 +28,20 @@ def login():
 def logear():
     username = request.form['username']
     password = request.form['password']
-    user = Model.login(conexion, username)
-    if user:
-        if User.check_password(user.password, password):
-            login_user(user)
-            return "exito"
-        else:
-            flash("password erroneo")
-            return render_template("login.html")
-    else:
-        flash("usuario no encontrado")
+    try:
+        app.config['MYSQL_HOST'] = 'localhost'
+        app.config['MYSQL_USER'] = username
+        app.config['MYSQL_PASSWORD'] = password
+        app.config['MYSQL_DB'] = 'carwash'
+        user = Model.login(conexion, username)
+        login_user(user)
+        return user.fullname
+    except:
+        app.config['MYSQL_HOST'] = 'localhost'
+        app.config['MYSQL_USER'] = "root"
+        app.config['MYSQL_PASSWORD'] = "2638"
+        app.config['MYSQL_DB'] = 'carwash'
+        flash("usuario y/o password equivocados")
         return render_template("login.html")
 
 
@@ -59,7 +69,8 @@ def insertCliente():
         flash("usuario ya registrado!")
         return render_template("formCliente.html")
     password = request.form['password']
-    if Model.insertCliente(conexion, dni, nombres, primerApellido, segundoApellido, fecNacimiento, sexo, telefono, correo, direccion, usuario, User.generate_password(password),password):
+    if Model.insertCliente(conexion, dni, nombres, primerApellido, segundoApellido, fecNacimiento, sexo, telefono, correo, direccion, usuario, password):
+        flash("registro Exitoso!")
         return redirect(url_for('login'))
 
 @app.route('/EmpleadoFormulario')

@@ -7,18 +7,18 @@ class Model():
         cursor.execute(sql,(username,))
         datos = cursor.fetchone()
         if datos:
-            return User(datos[0], datos[1], datos[2], datos[3], datos[4])
+            return User(datos[0], datos[1], datos[2], datos[3], None)
         else:
             return False
     @classmethod
     def insertCliente(self, db, dni, nombres, primer_apellido, 
                       segundo_apellido, fec_nacimiento, sexo, 
-                      telefono, correo, direccion, usuario, password, passwordN):
+                      telefono, correo, direccion, usuario, password):
         cursor = db.connection.cursor()
-        sql = "call Insertar_Cliente(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"
+        sql = "call Insertar_Cliente(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"
         cursor.execute(sql,(dni, nombres, primer_apellido, 
                             segundo_apellido, fec_nacimiento, sexo, 
-                            telefono, correo, direccion, usuario, password, passwordN))
+                            telefono, correo, direccion, usuario, password))
         return cursor.fetchall()
     @classmethod
     def findDNI(self, db, dni):
@@ -45,6 +45,6 @@ class Model():
         cursor.execute(sql,(id,))
         datos = cursor.fetchone()
         if datos:
-            return User(datos[0], datos[1], datos[2], datos[3], datos[4])
+            return User(datos[0], datos[1], datos[2], datos[3], None)
         else:
             return False
