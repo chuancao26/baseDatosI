@@ -1,14 +1,24 @@
+from models.entities.User import User
 class Model():
+    @classmethod
+    def login(self, db, username):
+        cursor = db.connection.cursor()
+        sql = "call buscarUsuario(%s);"
+        cursor.execute(sql,(username,))
+        datos = cursor.fetchone()
+        if datos:
+            return User(datos[0], datos[1], datos[2], datos[3], datos[4])
+        else:
+            return False
     @classmethod
     def insertCliente(self, db, dni, nombres, primer_apellido, 
                       segundo_apellido, fec_nacimiento, sexo, 
-                      telefono, correo, direccion, usuario, password):
+                      telefono, correo, direccion, usuario, password, passwordN):
         cursor = db.connection.cursor()
-        sql = "call Insertar_Cliente(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"
-        # sql = "INSERT INTO `cliente` (`codCliente`,`DNI`,`nombres`,`primerApellido`,`segundoApellido`,`fecNacimiento`,`sexo`,`telefono`,`correo`,`direccion`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        sql = "call Insertar_Cliente(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"
         cursor.execute(sql,(dni, nombres, primer_apellido, 
                             segundo_apellido, fec_nacimiento, sexo, 
-                            telefono, correo, direccion, usuario, password))
+                            telefono, correo, direccion, usuario, password, passwordN))
         return cursor.fetchall()
     @classmethod
     def findDNI(self, db, dni):
@@ -28,4 +38,13 @@ class Model():
             return True
         else:
             return False
-    
+    @classmethod
+    def getById(self, db, id):
+        cursor = db.connection.cursor()
+        sql = "call getByID(%s);"
+        cursor.execute(sql,(id,))
+        datos = cursor.fetchone()
+        if datos:
+            return User(datos[0], datos[1], datos[2], datos[3], datos[4])
+        else:
+            return False
