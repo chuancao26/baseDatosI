@@ -1,6 +1,17 @@
+DROP PROCEDURE IF EXISTS MarcarEntrada;
+DROP PROCEDURE IF EXISTS MarcarSalida;
+DROP FUNCTION IF EXISTS DNI_Existe;
+DROP FUNCTION IF EXISTS Usuario_Existe;
+DROP PROCEDURE IF EXISTS CrearUsuario;
+DROP PROCEDURE IF EXISTS crear_usuario;
+DROP PROCEDURE IF EXISTS Insertar_Cliente;
+DROP PROCEDURE IF EXISTS buscarClientePorDNI;
+DROP PROCEDURE IF EXISTS buscarUsuario;
+DROP PROCEDURE IF EXISTS getByID;
+
 -- ASISTENCIA -----------------------------------------------------------------------------------
 DELIMITER //
-drop procedure if exists MarcarEntrada//
+
 CREATE PROCEDURE MarcarEntrada(
     IN codEmpleado_f INTEGER
 )
@@ -15,7 +26,7 @@ END;
 //
 DELIMITER ;
 DELIMITER //
-drop procedure if exists MarcarSalida//
+
 CREATE PROCEDURE MarcarSalida(
     IN codEmpleado_f INTEGER,
     IN codAsistencia_f INTEGER
@@ -30,7 +41,7 @@ DELIMITER ;
 
 -- --------------------------------- un DNI existe?
 DELIMITER //
-drop function if exists DNI_Existe//
+
 CREATE FUNCTION DNI_Existe(p_DNI INT) 
 RETURNS BOOLEAN DETERMINISTIC
 BEGIN
@@ -124,7 +135,7 @@ DELIMITER ;
 -- ----------------------------------------------CREAR CLIENTE
 use carwash;
 DELIMITER //
-drop procedure if exists Insertar_Cliente;
+
 CREATE PROCEDURE Insertar_Cliente(
     IN c_DNI INT,
     IN c_Nombres VARCHAR(20),
@@ -162,7 +173,7 @@ DELIMITER ;
 -- Consultar dni
 
 DELIMITER //
-drop procedure if exists buscarClientePorDNI//
+
 CREATE PROCEDURE buscarClientePorDNI(IN dni_param INT)
 BEGIN
     SELECT *
@@ -175,7 +186,7 @@ DELIMITER ;
 -- Consultar si usuario existe
 
 DELIMITER //
-drop procedure if exists buscarUsuario//
+
 CREATE PROCEDURE buscarUsuario(IN user VARCHAR(55))
 BEGIN
     SELECT codCliente, concat_ws(' ',nombres, primerApellido, segundoApellido), usuario, password, DNI
@@ -185,7 +196,7 @@ END//
 
 DELIMITER ;
 DELIMITER //
-drop procedure if exists getByID//
+
 CREATE PROCEDURE getByID(IN codigo VARCHAR(55))
 BEGIN
     SELECT codCliente, concat_ws(' ',nombres, primerApellido, segundoApellido), usuario, password, DNI
