@@ -1,0 +1,65 @@
+{% extends './base.html' %}
+
+{% block title %}
+    Cliente
+{% endblock %}
+
+{% block customCSS %}
+<style>
+    body {
+        background-color: #000; /* Fondo negro */
+        font-family: Arial, sans-serif; /* Cambia la fuente si lo deseas */
+        margin: 0; /* Elimina el margen predeterminado del cuerpo */
+        padding: 0; /* Elimina el relleno predeterminado del cuerpo */
+    }
+    .servicio {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        background-color: #fff; /* Fondo blanco para cada servicio */
+    }
+    .imagen {
+        flex: 0 0 100px; /* Tamaño fijo para las imágenes */
+        margin-right: 10px;
+    }
+    .imagen img {
+        width: 100%; /* Hace que la imagen ocupe todo el ancho del contenedor */
+        height: auto; /* Mantiene la proporción de aspecto */
+    }
+    .informacion {
+        flex: 1;
+    }
+    .boton {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        text-decoration: none;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+    <h1>Servicios</h1>
+    {% for servicio in servicios %}
+        <div class="servicio">
+            <div class="imagen">
+                <img src="{{ servicio[5] }}" alt="{{ servicio[1] }}">
+            </div>
+            <div class="informacion">
+                <h2>{{ servicio[1] }}</h2>
+                <p>Precio: ${{ servicio[2] }}</p>
+                <p>Duración: {{ servicio[3] }}</p>
+                <p>Descripcion: {{ servicio[4] }}</p>
+                <a href="{{ url_for('start_factura', codServicio=servicio[0]) }}" class="boton">Ver Detalles</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block script %}
+    <!-- Puedes agregar aquí cualquier script específico para esta página -->
+{% endblock %}
