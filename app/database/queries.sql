@@ -90,7 +90,7 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE crear_usuario (
     IN p_nombre_usuario VARCHAR(50),
-    IN p_contrasena VARCHAR(50)
+    IN p_contrasena varchar(100)
 )
 BEGIN
     DECLARE usuario_existente INT;
@@ -122,13 +122,13 @@ END //
 DELIMITER ;
 
 -- ----------------------------------------------CREAR CLIENTE
-
+use carwash;
 DELIMITER //
 drop procedure if exists Insertar_Cliente;
 CREATE PROCEDURE Insertar_Cliente(
     IN c_DNI INT,
     IN c_Nombres VARCHAR(20),
-    IN c_PrimerApellido VARCHAR(30),
+    IN c_PrimerApellido  VARCHAR(30),
     IN c_SegundoApellido VARCHAR(30),
     IN c_fechNacimiento DATE,
     IN c_Sexo CHAR (10),
@@ -136,7 +136,8 @@ CREATE PROCEDURE Insertar_Cliente(
     IN c_correo VARCHAR(100),
     IN c_direccion VARCHAR(100),
     IN c_usuario VARCHAR(100), -- Nuevo parámetro para el usuario
-    IN c_contraseña VARCHAR(100) -- Nuevo parámetro para la contraseña
+    IN c_contraseña CHAR(255), -- Nuevo parámetro para la contraseña
+    IN p_contrasena VARCHAR(100)
 )
 BEGIN
     DECLARE dniExists BOOLEAN;
@@ -149,7 +150,7 @@ BEGIN
         VALUES (COD, c_DNI, c_Nombres, c_PrimerApellido, c_SegundoApellido, c_fechNacimiento, c_Sexo, c_Telefono, c_correo, c_direccion, c_usuario, c_contraseña);
 
         -- Llamar al procedimiento para crear el usuario
-        CALL crear_usuario(c_usuario, c_contraseña);
+        CALL crear_usuario(c_usuario, p_contrasena);
 
         SELECT 'Cliente insertado correctamente y usuario creado.' AS Status;
     ELSE
@@ -177,10 +178,22 @@ DELIMITER //
 drop procedure if exists buscarUsuario//
 CREATE PROCEDURE buscarUsuario(IN user VARCHAR(55))
 BEGIN
-    SELECT usuario
+    SELECT codCliente, concat_ws(' ',nombres, primerApellido, segundoApellido), usuario, password, DNI
     FROM cliente
     WHERE usuario = user;
 END//
 
 DELIMITER ;
+DELIMITER //
+drop procedure if exists getByID//
+CREATE PROCEDURE getByID(IN codigo VARCHAR(55))
+BEGIN
+    SELECT codCliente, concat_ws(' ',nombres, primerApellido, segundoApellido), usuario, password, DNI
+    FROM cliente
+    WHERE codCliente = codigo;
+END//
 
+DELIMITER ;
+show tables;
+use carwash;
+select * from cliente;
