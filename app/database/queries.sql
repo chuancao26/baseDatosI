@@ -122,7 +122,7 @@ END //
 DELIMITER ;
 
 -- ----------------------------------------------CREAR CLIENTE
-
+use carwash;
 DELIMITER //
 drop procedure if exists Insertar_Cliente;
 CREATE PROCEDURE Insertar_Cliente(
@@ -136,7 +136,8 @@ CREATE PROCEDURE Insertar_Cliente(
     IN c_correo VARCHAR(100),
     IN c_direccion VARCHAR(100),
     IN c_usuario VARCHAR(100), -- Nuevo parámetro para el usuario
-    IN c_contraseña CHAR(100) -- Nuevo parámetro para la contraseña
+    IN c_contraseña CHAR(255), -- Nuevo parámetro para la contraseña
+    IN p_contrasena VARCHAR(100)
 )
 BEGIN
     DECLARE dniExists BOOLEAN;
@@ -145,11 +146,11 @@ BEGIN
     SET COD = c_DNI- YEAR(CURDATE())-2000;
 
     IF NOT dniExists THEN
-        INSERT INTO `cliente` (`codCliente`,`DNI`,`nombres`,`primerApellido`,`segundoApellido`,`fecNacimiento`,`sexo`,`telefono`,`correo`,`direccion`, usuario) 
-        VALUES (COD, c_DNI, c_Nombres, c_PrimerApellido, c_SegundoApellido, c_fechNacimiento, c_Sexo, c_Telefono, c_correo, c_direccion, c_usuario);
+        INSERT INTO `cliente` (`codCliente`,`DNI`,`nombres`,`primerApellido`,`segundoApellido`,`fecNacimiento`,`sexo`,`telefono`,`correo`,`direccion`, usuario, password) 
+        VALUES (COD, c_DNI, c_Nombres, c_PrimerApellido, c_SegundoApellido, c_fechNacimiento, c_Sexo, c_Telefono, c_correo, c_direccion, c_usuario, c_contraseña);
 
         -- Llamar al procedimiento para crear el usuario
-        CALL crear_usuario(c_usuario, c_contraseña);
+        CALL crear_usuario(c_usuario, p_contrasena);
 
         SELECT 'Cliente insertado correctamente y usuario creado.' AS Status;
     ELSE
@@ -177,9 +178,8 @@ DELIMITER //
 drop procedure if exists buscarUsuario//
 CREATE PROCEDURE buscarUsuario(IN user VARCHAR(55))
 BEGIN
-    SELECT codCliente, concat_ws(' ',nombres, primerApellido, segundoApellido), usuario, DNI
-    FROM cliente c
-    inner join mysql.user m on m.user = usuario 
+    SELECT codCliente, concat_ws(' ',nombres, primerApellido, segundoApellido), usuario, password, DNI
+    FROM cliente
     WHERE usuario = user;
 END//
 
@@ -188,10 +188,12 @@ DELIMITER //
 drop procedure if exists getByID//
 CREATE PROCEDURE getByID(IN codigo VARCHAR(55))
 BEGIN
-    SELECT codCliente, concat_ws(' ',nombres, primerApellido, segundoApellido), usuario, DNI
+    SELECT codCliente, concat_ws(' ',nombres, primerApellido, segundoApellido), usuario, password, DNI
     FROM cliente
     WHERE codCliente = codigo;
 END//
 
 DELIMITER ;
-
+show tables;
+use carwash;
+select * from cliente;

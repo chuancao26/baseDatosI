@@ -1,0 +1,26 @@
+{% extends './base.html' %}
+{%block title%}Cliente{% endblock %}
+{% block customCSS %}
+{% endblock %}
+{% block body %}
+{% for cliente in dato %}
+    <div>
+        <p>Codigo Cliente: {{ cliente[0] }}</p>
+        <p>DNI: {{ cliente[1] }}</p>
+        <p>Nombres: {{ cliente[2] }}</p>
+        <p>Apellidos: {{ cliente[3] }} {{ cliente[4] }}</p>
+        <p>Fecha de Nacimiento: {{ cliente[5] }}</p>
+        <p>Telefono: {{ cliente[6] }}</p>
+        <p>Correo: {{ cliente[7] }}</p>
+        <p>Direccion: {{ cliente[8] }}</p>
+    </div>
+{% endfor %}
+<a href="{{ url_for('start_client') }}">Ver Membresia</a>
+<a href="{{ url_for('start_client_auto_view') }}">Ver Autos</a>
+<a href="{{ url_for('start_client_auto_register') }}">Registrar Nuevo Auto</a>
+<a href="{{ url_for('start_client') }}">Realizar Cita</a>
+<a href="{{ url_for('start_client') }}">Ver Facturas</a>
+
+{% endblock %}
+{% block script %}
+{% endblock%}

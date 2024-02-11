@@ -1,0 +1,47 @@
+{% extends './base.html' %}
+
+{% block title %}
+    Cliente
+{% endblock %}
+
+{% block customCSS %}
+<style>
+    .card {
+        margin-bottom: 20px;
+        width: 100%; /* Asegúrate de que las tarjetas ocupen todo el ancho */
+        border: 1px solid #ccc; /* Agrega un borde para resaltar las tarjetas */
+        border-radius: 5px; /* Ajusta el radio de borde para esquinas redondeadas */
+        padding: 10px; /* Añade espacio interno a las tarjetas */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agrega una sombra para un aspecto más elevado */
+    }
+
+    .card-body {
+        padding: 10px; /* Añade espacio interno al cuerpo de las tarjetas */
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row">
+        {% for dato in dato %}
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text"><strong>Codigo de Auto:</strong> {{ dato[0] }}</p>
+                    <p class="card-text"><strong>Placa:</strong> {{ dato[1] }}</p>
+                    <p class="card-text"><strong>Tipo:</strong> {{ dato[2] }}</p>
+                    <p class="card-text"><strong>Volumen:</strong> {{ dato[3] }}</p>
+                    <p class="card-text"><strong>Color:</strong> {{ dato[4] }}</p>
+                    <p class="card-text"><strong>Marca:</strong> {{ dato[5] }}</p>
+                    <p class="card-text"><strong>Modelo:</strong> {{ dato[6] }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<a href="{{ url_for('start_client') }}">Regresar</a>
+<a href="{{ url_for('start_client_auto_register') }}">Registrar Nuevo Auto</a>
+<a href="{{ url_for('start_client') }}">Realizar Cita</a>
+{% endblock %}
