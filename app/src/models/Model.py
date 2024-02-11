@@ -52,11 +52,10 @@ class Model():
         
     @classmethod
     def esAdmin(cls,db,username ):
-        cursor = db.connector.cursor()
-        cursor.callproc('esAdmin', (username, es_admin))
+        cursor = db.connection.cursor()
 
-        es_admin = cursor.fetchone()[1]
-        cursor.close()
+        cursor.execute("SELECT esAdmin(%s)", (username,))
+        es_admin = cursor.fetchone()[0]
 
         return es_admin
 
