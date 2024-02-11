@@ -120,7 +120,7 @@ CREATE TABLE `maquina` (
   `marca` VARCHAR(20),
   `funcion` VARCHAR(50),
   `precio` DECIMAL(10,2),
-  `estaOperativa` bit,
+  `estaOperativa` int,
   `codProveedor` INTEGER,
   `codLugar` INTEGER,
   PRIMARY KEY (`codMaquina`)
