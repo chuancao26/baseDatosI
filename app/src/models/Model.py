@@ -10,6 +10,7 @@ class Model():
             return User(datos[0], datos[1], datos[2], datos[3], datos[4])
         else:
             return False
+        
     @classmethod
     def insertCliente(self, db, dni, nombres, primer_apellido, 
                       segundo_apellido, fec_nacimiento, sexo, 
@@ -48,3 +49,16 @@ class Model():
             return User(datos[0], datos[1], datos[2], datos[3], datos[4])
         else:
             return False
+        
+    @classmethod
+    def esAdmin(cls,db,username ):
+        cursor = db.connector.cursor()
+        cursor.callproc('esAdmin', (username, es_admin))
+
+        es_admin = cursor.fetchone()[1]
+        cursor.close()
+
+        return es_admin
+
+    
+        

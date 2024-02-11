@@ -41,7 +41,10 @@ def logear():
     password = request.form['password']
     user = Model.login(conexion, username)
     if user:
-        if User.check_password(user.password, password):
+        if Model.esAdmin(conexion, user.username) and User.check_password(user.password, password):
+            login_user(user)
+            return redirect(url_for("nuestrosCaminos"))
+        elif User.check_password(user.password, password):
             login_user(user)
             return redirect(url_for("start_client"))
         else:
@@ -51,7 +54,9 @@ def logear():
         flash("usuario no encontrado")
         return render_template("login.html")
 
-
+@app.route('/nuestrosCaminos')
+def nuestrosCaminos():
+    return render_template('nuestrosCaminos.html')
 
 @app.route('/ClienteFormulario')
 def ClienteFormulario():
