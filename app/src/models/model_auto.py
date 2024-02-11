@@ -15,7 +15,7 @@ class Model_auto():
     def mostrar(cls, db):
         try:
             cursor = db.connection.cursor()
-            cursor.execute("SELECT * FROM Auto")
+            cursor.execute("call mostrarAuto()")
             rows = cursor.fetchall()
             autos = []
             for row in rows:

@@ -4,7 +4,7 @@ DELIMITER //
 CREATE FUNCTION Ultimo_Id_Maquina() RETURNS INT DETERMINISTIC
 BEGIN
 	declare id INTEGER;
-	SELECT max(m.codMaquina)
+	SELECT IFNULL(max(m.codMaquina), 0)
     INTO id
     FROM maquina m;
     return id;
@@ -33,7 +33,7 @@ DELIMITER //
 CREATE FUNCTION Ultimo_Id_Servicio() RETURNS INT DETERMINISTIC
 BEGIN
 	declare id INTEGER;
-	SELECT max(s.codServicio)
+	SELECT IFNULL(max(s.codServicio), 0)
     INTO id
     FROM servicio s;
     return id;
@@ -58,7 +58,7 @@ DELIMITER //
 CREATE FUNCTION Ultimo_Id_Utensilio() RETURNS INT DETERMINISTIC
 BEGIN
 	declare id INTEGER;
-	SELECT max(u.codUtensilio)
+	SELECT IFNULL(max(u.codUtensilio), 0)
     INTO id
     FROM utensilio u;
     return id;
@@ -85,7 +85,7 @@ DELIMITER //
 CREATE FUNCTION Ultimo_Id_Auto() RETURNS INT DETERMINISTIC
 BEGIN
 	declare id INTEGER;
-	SELECT max(a.codAuto)
+	SELECT IFNULL(max(a.codAuto), 0)
     INTO id
     FROM auto a;
     return id;
