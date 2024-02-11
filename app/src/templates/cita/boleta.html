@@ -1,0 +1,51 @@
+{% extends './base.html' %}
+
+{% block title %}
+    Factura
+{% endblock %}
+
+{% block customCSS %}
+<style>
+    .card {
+        text-align: center;
+        margin-bottom: 20px;
+        width: 100%; /* Asegúrate de que las tarjetas ocupen todo el ancho */
+        border: 1px solid #ccc; /* Agrega un borde para resaltar las tarjetas */
+        border-radius: 5px; /* Ajusta el radio de borde para esquinas redondeadas */
+        padding: 10px; /* Añade espacio interno a las tarjetas */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agrega una sombra para un aspecto más elevado */
+    }
+
+    .card-body {
+        text-align: center;
+        padding: 10px; /* Añade espacio interno al cuerpo de las tarjetas */
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row">
+        {% for dato in dato %}
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h1 for="facturaga">Factura</h1>
+                    <p class="card-text"><strong>cod_factura:</strong> {{ dato[0] }}</p>
+                    <p class="card-text"><strong>fecha:</strong> {{ dato[1] }}</p>
+                    <p class="card-text"><strong>codCita:</strong> {{ dato[4] }}</p>
+                    <p class="card-text"><strong>metodoPago:</strong> {{ dato[3] }}</p>
+
+                    <p class="card-text"><strong>total:</strong> {{ dato[2] }}</p>
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALoAAAC6CAMAAAAu0KfDAAAABlBMVEX///8AAABVwtN+AAABxklEQVR4nO3QUZKDQAwD0eT+l94DgJQeCAXOtr4oGKzneb2MMebivHHSX31mbzljkC5d+hT6tj6dIcuQ+vRMDNKlS59I5zX9ZKKQ98QgXbr0X6X3f9P5NEG6dOnSSTGnk6/SpUv/PXrHEXpHHLsa6dKlT6cfq/nuMzdIly59Cv18SMGF9Wci/Y5IvyM301N9quxEshJZAy0sXbr0x9NJWRqXWH2NnnQR0qVLn0XvUL79KqVfFmmULl36FHpC9xBoByFi+ipduvQh9D4ivUllqwvwq5EuXfpEOjoK6NsJxy6iLyxduvRZ9M4lX8mSx7rieenSpQ+hry6z/TdVrl5E/1e6dOmz6H2B/kyI6TmtmhaLy0iXLv3B9FXWauXq5NSyE+nSpT+enupTyEoESto/oKVLl/54emKREemvPqf/tWCQLl36EHpfKYWc54vxLunSpU+hr2Zbn3Dkfb+yPkG6dOnPp79xTtWErmPXIV269Fn0nQ/hTHomK5FeflK6dOmz6O9N+Lgz6/XsoKVLl/6j9PS1V/LFert06dL/A31nUM13J0iXLn0inRfz9JnbM/3ipEuXPpF+DEGInN5bpEuXPpFujDEX5A/WVTvF1c+o+gAAAABJRU5ErkJggg==" alt="QR Code">
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<a href="{{ url_for('start_client') }}">Regresar</a>
+<a href="{{ url_for('start_client_auto_register') }}">Registrar Nuevo Auto</a>
+<a href="{{ url_for('start_cita') }}">Realizar Cita</a>
+{% endblock %}

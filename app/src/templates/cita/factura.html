@@ -1,0 +1,14 @@
+{% extends './base.html' %}
+
+{% block title %}
+    Factura
+{% endblock %}
+
+{% block body %}
+    <h1>Factura</h1>
+    <p>Servicio: {{ servicio[0][1] }}</p>
+    <p>Precio: ${{ servicio[0][2] }}</p>
+    <p>Duración: {{ servicio[0][3] }}</p>
+    <p>Descripción: {{ servicio[0][4] }}</p>
+    <!-- Agrega más detalles según sea necesario -->
+{% endblock %}

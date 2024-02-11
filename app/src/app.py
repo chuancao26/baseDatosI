@@ -8,12 +8,14 @@ from models.Model import Model
 from config import config
 
 from routes.client_route import configure_route_client
+from routes.servicios_cita import servicio_route
 
 app = Flask(__name__)
 conexion = MySQL(app)
 login_manager_app = LoginManager(app)
 
 configure_route_client(app,conexion)
+servicio_route(app,conexion)
 
 @login_manager_app.user_loader
 def load_user(id):

@@ -1,0 +1,79 @@
+{% extends './base.html' %}
+
+{% block title %}
+    Crear Cita
+{% endblock %}
+
+{% block customCSS %}
+<style>
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    form {
+        margin-top: 30px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="time"],
+    select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Crear Cita</h1>
+    <form action="{{ url_for('crear_cita') }}" method="POST">
+        <input type="hidden" name="codCliente" value="{{ codCliente }}">
+        <input type="hidden" name="codServicio" value="{{ codServicio }}">
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha" required>
+        <label for="hora">Hora:</label>
+        <input type="time" id="hora" name="hora" required>
+        <label for="progreso">Metodo de pago:</label>
+        <input type="text" id="progreso" name="progreso">
+        <label for="carros">Cantidad de Carros:</label>
+        <select id="can_carros" name="Cantidad_Carros" required>
+            <option value="">Seleccione...</option>
+            {% for j in range(11) %}
+                <option value="{{ j }}">{{ j }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Crear Cita">
+    </form>
+</div>
+{% endblock %}
