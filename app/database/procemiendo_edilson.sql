@@ -102,11 +102,9 @@ BEGIN
     SET id = Ultimo_Id_Cita()+1;
 	INSERT INTO `cita` 
     VALUES (id,fec,hor,'RESERVADO',cli,ser);
-END
-//
+END //
 DELIMITER ;
-//
-DELIMITER ;
+
 -- Procedimientos de Cita
 -- Funciones
 drop function Ultimo_Id_Cita;

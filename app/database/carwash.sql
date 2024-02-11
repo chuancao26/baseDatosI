@@ -443,6 +443,6 @@ VALUES
 (5, 5, 60);
 
 INSERT INTO `cliente` (`codCliente`, `DNI`, `nombres`, `primerApellido`, `segundoApellido`, `fecNacimiento`, `sexo`, `telefono`, `correo`, `direccion`, `usuario`, `password`) 
-VALUES (666, 666666, 'Juan', 'Pérez', 'González', '1990-05-15', 'Masculino', '123456789', 'juan@example.com', 'Calle Principal 123', 'admin', 'admin');
+VALUES (666, 666666, 'Juan', 'Pérez', 'González', '1990-05-15', 'Masculino', '123456789', 'juan@example.com', 'Calle Principal 123', 'admin', 'scrypt:32768:8:1$SLyOfHlf1dRbECLv$359422f4ef6ae9513c8c5e12175b25a3747981a1943a609bb96a59e7b3f29bfdce3f9a549e56837cf9cc907befcf366837fdbec8ec4cf6dbb029e49fdb978133');
 
 

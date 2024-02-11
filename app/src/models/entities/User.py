@@ -13,3 +13,6 @@ class User(UserMixin):
     @classmethod  
     def generate_password(self, password):
         return generate_password_hash(password)
+
+
+print(generate_password_hash('admin'))

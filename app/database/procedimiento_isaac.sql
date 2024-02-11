@@ -98,7 +98,7 @@ BEGIN
 	INSERT INTO `maquina` 
     VALUES (id,p_nombre, p_marca, p_funcion, p_precio, p_esta_operativa, p_codProveedor, p_codLugar);
 END //
-DELIMITER;
+DELIMITER ;
 DELIMITER //
 
 CREATE FUNCTION Ultimo_Id_Servicio() RETURNS INT DETERMINISTIC
@@ -126,7 +126,7 @@ BEGIN
 	INSERT INTO servicio 
     VALUES (id, p_nombre, p_precio, p_duracion, p_descripcion, p_url_imagen);
 END //
-DELIMITER;
+DELIMITER ;
 DELIMITER //
 
 CREATE FUNCTION Ultimo_Id_Utensilio() RETURNS INT DETERMINISTIC
@@ -153,7 +153,7 @@ BEGIN
 	INSERT INTO utensilio 
     VALUES (id, p_nombre, p_descripcion, p_precio, p_cantidad, p_unidad);
 END //
-DELIMITER;
+DELIMITER ;
 DELIMITER //
 
 CREATE FUNCTION Ultimo_Id_Auto() RETURNS INT DETERMINISTIC
@@ -182,7 +182,7 @@ BEGIN
 	INSERT INTO auto 
     VALUES (id, p_placa, p_tipo, p_volumen, p_color, p_marca, p_modelo, p_codCliente);
 END //
-DELIMITER;
+DELIMITER ;
 
 DELIMITER //
 
