@@ -5,43 +5,114 @@
 {% endblock %}
 
 {% block customCSS %}
-<style>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    body, html {
+      background-color: #f8f9fa;
+      color: #212529;
+      height: 100%;
+    }
+
     .card {
-        margin-bottom: 20px;
-        width: 100%; /* Asegúrate de que las tarjetas ocupen todo el ancho */
-        border: 1px solid #ccc; /* Agrega un borde para resaltar las tarjetas */
-        border-radius: 5px; /* Ajusta el radio de borde para esquinas redondeadas */
-        padding: 10px; /* Añade espacio interno a las tarjetas */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agrega una sombra para un aspecto más elevado */
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #ffffff;
+      position: relative; /* Añadido */
     }
 
     .card-body {
-        padding: 10px; /* Añade espacio interno al cuerpo de las tarjetas */
+      padding: 20px;
+      color: #212529;
     }
-</style>
+
+    .btn-delete-container {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    .btn-custom {
+      padding: 10px 20px;
+      background-color: #3498db;
+      border-color: #3498db;
+      color: #ffffff;
+    }
+
+    .btn-custom:hover {
+      background-color: #2980b9;
+    }
+    .center-content {
+            text-align: center;
+            margin-top: 50px; /* Ajusta el margen superior para centrar en la página */
+    }
+  </style>
 {% endblock %}
 
 {% block body %}
-<div class="container mt-5">
-    <div class="row">
-        {% for dato in dato %}
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <p class="card-text"><strong>Codigo de Auto:</strong> {{ dato[0] }}</p>
-                    <p class="card-text"><strong>Placa:</strong> {{ dato[1] }}</p>
-                    <p class="card-text"><strong>Tipo:</strong> {{ dato[2] }}</p>
-                    <p class="card-text"><strong>Volumen:</strong> {{ dato[3] }}</p>
-                    <p class="card-text"><strong>Color:</strong> {{ dato[4] }}</p>
-                    <p class="card-text"><strong>Marca:</strong> {{ dato[5] }}</p>
-                    <p class="card-text"><strong>Modelo:</strong> {{ dato[6] }}</p>
-                </div>
+  <h1 class="center-content">Mis autos</h1>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      {% for dato in dato %}
+        <div class="col-md-4">
+          <div class="card">
+            <div class="btn-delete-container"> <!-- Contenedor para el botón de eliminar -->
+              <!-- Dentro del bucle for en tu archivo "facture.html" -->
+                <a href="#" class="btn btn-danger btn-circle btn-sm btn-delete" data-cod-auto="{{ dato[0] }}"><i class="fas fa-trash"></i></a>
             </div>
+            <div class="card-body">
+              <p class="card-text"><strong>Codigo de Auto:</strong> {{ dato[0] }}</p>
+              <p class="card-text"><strong>Placa:</strong> {{ dato[1] }}</p>
+              <p class="card-text"><strong>Tipo:</strong> {{ dato[2] }}</p>
+              <p class="card-text"><strong>Volumen:</strong> {{ dato[3] }}</p>
+              <p class="card-text"><strong>Color:</strong> {{ dato[4] }}</p>
+              <p class="card-text"><strong>Marca:</strong> {{ dato[5] }}</p>
+              <p class="card-text"><strong>Modelo:</strong> {{ dato[6] }}</p>
+            </div>
+          </div>
         </div>
-        {% endfor %}
+      {% endfor %}
     </div>
-</div>
-<a href="{{ url_for('start_client') }}">Regresar</a>
-<a href="{{ url_for('start_client_auto_register') }}">Registrar Nuevo Auto</a>
-<a href="{{ url_for('start_client') }}">Realizar Cita</a>
+  </div>
+  <div class="container mt-3">
+    <div class="row justify-content-center">
+      <div class="col-md-6 text-center">
+        <a href="{{ url_for('start_client') }}" class="btn btn-primary">Regresar</a>
+        <a href="{{ url_for('start_client_auto_register') }}" class="btn btn-success ml-2">Registrar Nuevo Auto</a>
+        <a href="{{ url_for('start_client') }}" class="btn btn-info ml-2">Realizar Cita</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var deleteButtons = document.querySelectorAll('.btn-delete');
+
+        deleteButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                var codAuto = this.getAttribute('data-cod-auto');
+
+                fetch('/eliminar_auto', {
+                    method: 'DELETE',
+                    headers: {
+                    'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                    codAuto: codAuto
+                    })
+                }).then(function(response) {
+                    window.location.href = window.location.href;
+                }).catch(function(error) {
+                    console.error('Error al eliminar el auto:', error);
+                });
+            });
+        });
+    });
+
+  </script>
 {% endblock %}

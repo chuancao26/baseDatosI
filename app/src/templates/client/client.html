@@ -1,26 +1,51 @@
 {% extends './base.html' %}
-{%block title%}Cliente{% endblock %}
+{% block title %}Cliente{% endblock %}
 {% block customCSS %}
+  <!-- Agrega el enlace al archivo CSS de Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Estilo adicional personalizado */
+    body, html {
+      height: 100%;
+    }
+  </style>
 {% endblock %}
 {% block body %}
-{% for cliente in dato %}
-    <div>
-        <p>Codigo Cliente: {{ cliente[0] }}</p>
-        <p>DNI: {{ cliente[1] }}</p>
-        <p>Nombres: {{ cliente[2] }}</p>
-        <p>Apellidos: {{ cliente[3] }} {{ cliente[4] }}</p>
-        <p>Fecha de Nacimiento: {{ cliente[5] }}</p>
-        <p>Telefono: {{ cliente[6] }}</p>
-        <p>Correo: {{ cliente[7] }}</p>
-        <p>Direccion: {{ cliente[8] }}</p>
+  <div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+      <div class="col-md-8">
+        {% for cliente in dato %}
+          <div class="card card-sm mb-3"> <!-- Se agregó 'card-sm' para hacer la tarjeta más pequeña -->
+            <div class="card-body card-body-sm"> <!-- Se agregó 'card-body-sm' para hacer el cuerpo de la tarjeta más pequeño -->
+              <h5 class="card-title">Cliente</h5>
+              <p class="card-text">Código Cliente: {{ cliente[0] }}</p>
+              <p class="card-text">DNI: {{ cliente[1] }}</p>
+              <p class="card-text">Nombres: {{ cliente[2] }}</p>
+              <p class="card-text">Apellidos: {{ cliente[3] }} {{ cliente[4] }}</p>
+              <p class="card-text">Fecha de Nacimiento: {{ cliente[5] }}</p>
+              <p class="card-text">Sexo: {{ cliente[6] }}</p>
+              <p class="card-text">Teléfono: {{ cliente[7] }}</p>
+              <p class="card-text">Correo: {{ cliente[8] }}</p>
+              <p class="card-text">Dirección: {{ cliente[9] }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="col-md-4">
+        <div class="list-group">
+          <a href="{{ url_for('start_client') }}" class="list-group-item list-group-item-action">Ver Membresia</a>
+          <a href="{{ url_for('start_client_auto_view') }}" class="list-group-item list-group-item-action">Ver Autos</a>
+          <a href="{{ url_for('start_client_auto_register') }}" class="list-group-item list-group-item-action">Registrar Nuevo Auto</a>
+          <a href="{{ url_for('start_cita') }}" class="list-group-item list-group-item-action">Realizar Cita</a>
+          <a href="{{ url_for('start_client_facture') }}" class="list-group-item list-group-item-action">Ver Facturas</a>
+        </div>
+        <br>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger btn-block">Log Out</a>
+      </div>
     </div>
-{% endfor %}
-<a href="{{ url_for('start_client') }}">Ver Membresia</a>
-<a href="{{ url_for('start_client_auto_view') }}">Ver Autos</a>
-<a href="{{ url_for('start_client_auto_register') }}">Registrar Nuevo Auto</a>
-<a href="{{ url_for('start_cita') }}">Realizar Cita</a>
-<a href="{{ url_for('start_client') }}">Ver Facturas</a>
-
+  </div>
 {% endblock %}
 {% block script %}
-{% endblock%}
+  <!-- Agrega el enlace al archivo JS de Bootstrap (opcional, solo si necesitas funcionalidades de JavaScript de Bootstrap) -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}

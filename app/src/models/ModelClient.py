@@ -3,7 +3,7 @@ class ModelClient():
     def data(cls,db,dni):
         try:
             cursor = db.connection.cursor()
-            sql = "SELECT codCliente, DNI, nombres, primerApellido, segundoApellido, fecNacimiento, sexo, telefono, correo, direccion FROM cliente where DNI = (%s)"
+            sql = "call BuscarClienteDNI(%s)"
             cursor.execute(sql,(dni,))
             data = cursor.fetchall()
             return data
@@ -14,7 +14,7 @@ class ModelClient():
     def autos(cls,db,dni):
         try:
             cursor = db.connection.cursor()
-            sql = "SELECT * FROM auto join cliente on auto.codCliente = cliente.codCliente WHERE cliente.DNI = (%s)"
+            sql = "call BuscarAutosPorDNI(%s)"
             cursor.execute(sql,(dni,))
             data = cursor.fetchall()
             return data
@@ -22,15 +22,35 @@ class ModelClient():
             raise Exception(ex)
         
     @classmethod
-    def insertar_auto(cls, db, codAuto, placa, tipo, volumen, color, marca, modelo, dni):
+    def insertar_auto(cls, db, placa, tipo, volumen, color, marca, modelo, dni):
         try:
             cursor = db.connection.cursor()
-            sql_cod_cliente = "SELECT codCliente FROM cliente WHERE DNI = %s"
-            cursor.execute(sql_cod_cliente, (dni,))
-            codCliente = cursor.fetchone()[0] 
-            sql_insert_auto = "INSERT INTO auto (codAuto, placa, tipo, volumen, color, marca, modelo, codCliente) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-            cursor.execute(sql_insert_auto, (codAuto, placa, tipo, volumen, color, marca, modelo, codCliente))
+            sql = "call InsertarAuto(%s, %s, %s, %s, %s, %s, %s)"
+            cursor.execute(sql, (placa, tipo, volumen, color, marca, modelo, dni))
             db.connection.commit()
         except Exception as ex:
             db.connection.rollback()
             raise Exception(ex)
+        
+    @classmethod
+    def facturas(cls, db, dni):
+        try:
+            cursor = db.connection.cursor()
+            sql = "call ObtenerFacturaPorDNI(%s)"
+            cursor.execute(sql, (dni,))
+            data = cursor.fetchall()
+            return data
+        except Exception as ex:
+            raise Exception(ex)
+        
+    @classmethod
+    def eliminar(cls, db, codAuto):
+        try:
+            with db.connection.cursor() as cursor:
+                sql = "CALL EliminarAuto(%s)"
+                cursor.execute(sql, (codAuto,))
+            db.connection.commit()
+        except Exception as ex:
+            db.connection.rollback()
+            raise Exception(ex)
+

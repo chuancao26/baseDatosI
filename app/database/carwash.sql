@@ -35,8 +35,8 @@ CREATE TABLE `cliente` (
   usuario varchar(55),
   password char(255)
 );
-use carwash;
-select * from cliente;
+
+
 CREATE TABLE `representante` (
   `codRepresentante` INTEGER,
   `DNI` CHAR(8),
@@ -50,8 +50,7 @@ CREATE TABLE `representante` (
   `direccion` VARCHAR(100),
   PRIMARY KEY (`codRepresentante`)
 );
-select user from mysql.user;
--- drop user luis123@localhost;
+
 CREATE TABLE `asistencia` (
   `codAsistencia` INTEGER,
   `fecha` DATE,
@@ -88,7 +87,10 @@ CREATE TABLE `servicio` (
   `duracion` TIME,
   PRIMARY KEY (`codServicio`)
 );
-	
+
+alter table servicio add column descripcion varchar(255);
+alter table servicio add column url_imagen varchar(255);
+
 CREATE TABLE `servicio_utensilio` (
   `codServicio` INTEGER,
   `codUtensilio` INTEGER,
@@ -120,7 +122,7 @@ CREATE TABLE `maquina` (
   `marca` VARCHAR(20),
   `funcion` VARCHAR(50),
   `precio` DECIMAL(10,2),
-  `estaOperativa` int,
+  `estaOperativa` bit,
   `codProveedor` INTEGER,
   `codLugar` INTEGER,
   PRIMARY KEY (`codMaquina`)
