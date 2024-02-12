@@ -1,0 +1,21 @@
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+.dashboard-button {
+    width: 200px;
+    height: 150px;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.dashboard-button img {
+    max-width: 80px;
+    max-height: 80px;
+    margin-bottom: 10px;
+}
