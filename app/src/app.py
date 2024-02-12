@@ -43,7 +43,7 @@ def logear():
         if User.check_password(user.password, password):
             if username == 'admin':
                 login_user(user)
-                return redirect(url_for("nuestrosCaminos"))
+                return redirect(url_for("panelAdmin"))
             login_user(user)
             return redirect(url_for("start_client"))
         else:
@@ -94,7 +94,7 @@ def representanteFormulario():
 
 @app.route('/panelAdmin')
 def panelAdmin():
-    return render_template('panel_Admin_beta.html')
+    return render_template('panel_admin_beta.html')
 
 
 @app.route('/readMaquina')
