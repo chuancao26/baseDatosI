@@ -18,7 +18,7 @@
                     <h5 class="card-title">{{ servicio.nombre }}</h5>
                     <p class="card-text">Precio: ${{ servicio.precio }}</p>
                     <p class="card-text">Duración: {{ servicio.duracion }}</p>
-                    <p class="card-text">Duración: {{ servicio.descripcion }}</p>
+                    <p class="card-text">Descripción: {{ servicio.descripcion }}</p>
                     <a href="{{ url_for('modServicio', codServicio=servicio.codServicio) }}" class="btn btn-primary">Modificar</a>
                     <a href="{{ url_for('delServicio', codServicio=servicio.codServicio) }}" class="btn btn-danger">Eliminar</a>
                 </div>

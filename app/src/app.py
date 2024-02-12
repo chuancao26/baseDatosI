@@ -13,11 +13,15 @@ from models.model_maquina import Model_maquina
 from models.model_auto import Model_auto
 from models.model_utensilio import Model_utensilio
 from models.model_servicio import Model_servicio
+from models.model_reportes import Model_reporte
+from models.model_empleado import Model_empleado
+
 
 from models.entities.maquina import Maquina
 from models.entities.utensilio import Utensilio
 from models.entities.auto import Auto
 from models.entities.servicio import Servicio
+from models.entities.empleado import Empleado
 
 app = Flask(__name__)
 conexion = MySQL(app)
@@ -98,8 +102,13 @@ def representanteFormulario():
 
 @app.route('/panelAdmin')
 def panelAdmin():
-    return render_template('panel_admin_beta.html')
+    datos_clientes = Model_reporte.obtener_datos_clientes(conexion)
+    datos_proveedores = Model_reporte.obtener_datos_proveedores(conexion)
+    datos_empleados = Model_reporte.obtener_datos_empleados(conexion)
+    return render_template('panel_admin_beta.html',data1=datos_clientes, data2=datos_proveedores, data3=datos_empleados)
 
+
+#----------------------------------------------------------------
 
 @app.route('/readMaquina')
 def readMaquina():
@@ -274,6 +283,61 @@ def modUtensilio(codUtensilio):
         utensilio = Model_utensilio.mostrarU(conexion, codUtensilio)
         return render_template('cruds/utensilio/modUtensilio.html', data=utensilio)
 #-------------------------------------------------
+@app.route('/readEmpleado')
+def readEmpleado():
+    data = Model_empleado.mostrar(conexion)
+    return render_template('cruds/empleado/readEmpleado.html', data=data)
+
+@app.route('/readEmpleado/formEmpleado', methods=['GET','POST'])
+def formEmpleado():
+    if request.method =='POST':
+        DNI = request.form['DNI']
+        nombres = request.form['nombres'] 
+        primerApellido = request.form['primerApellido'] 
+        segundoApellido = request.form['segundoApellido'] 
+        fecNacimiento = request.form['fecNacimiento'] 
+        sexo = request.form['sexo'] 
+        telefono = request.form['telefono'] 
+        correo = request.form['correo'] 
+        direccion = request.form['direccion'] 
+        salario = request.form['salario'] 
+        puesto = request.form['puesto'] 
+        aniosExperiencia = request.form['aniosExperiencia'] 
+        codHorario = request.form['codHorario'] 
+        empleado = Empleado(DNI, nombres, primerApellido, segundoApellido, fecNacimiento, sexo, telefono, correo, direccion, salario, puesto, aniosExperiencia, codHorario)
+        Model_empleado.insertar(conexion, empleado)
+        return redirect(url_for('readEmpleado'))
+    else:
+        return render_template('cruds/empleado/formEmpleado.html')
+
+@app.route('/delEmpleado/<int:DNI>', methods=['GET'])
+def delEmpleado(DNI):
+    Model_empleado.borrar(conexion, DNI)
+    return redirect(url_for('readEmpleado'))
+
+@app.route('/readEmpleado/modEmpleado/<int:DNI>', methods=['GET','POST'])
+def modEmpleado(DNI):
+    if request.method =='POST':
+        nombres = request.form['nombres']
+        primerApellido = request.form['primerApellido'] 
+        segundoApellido = request.form['segundoApellido'] 
+        fecNacimiento = request.form['fecNacimiento'] 
+        sexo = request.form['sexo'] 
+        telefono = request.form['telefono'] 
+        correo = request.form['correo'] 
+        direccion = request.form['direccion'] 
+        salario = request.form['salario'] 
+        puesto = request.form['puesto'] 
+        aniosExperiencia = request.form['aniosExperiencia'] 
+        codHorario = request.form['codHorario'] 
+        empleado = Empleado(DNI, nombres, primerApellido, segundoApellido, fecNacimiento, sexo, telefono, correo, direccion, salario, puesto, aniosExperiencia, codHorario)
+        Model_empleado.modificar(conexion, empleado)
+        return redirect(url_for('readEmpleado'))
+    else:
+        empleado = Model_empleado.mostrarU(conexion, DNI)
+        return render_template('cruds/empleado/modEmpleado.html', data=empleado)
+
+#---------------------------------------------------
 
 if __name__ == '__main__':
     app.config.from_object(config['development'])

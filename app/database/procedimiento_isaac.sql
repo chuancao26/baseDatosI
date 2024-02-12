@@ -377,3 +377,44 @@ BEGIN
 END //
 
 DELIMITER ;
+
+drop procedure if exists ObtenerInformacionClientes;
+drop procedure if exists ObtenerProveedoresYUtensilios;
+
+DELIMITER //
+CREATE PROCEDURE ObtenerInformacionClientes()
+BEGIN
+    SELECT 
+        CONCAT(nombres, ' ', primerApellido, ' ', segundoApellido ) as Nombres,
+        DNI,
+        telefono,
+        correo,
+        (SELECT COUNT(*) FROM auto WHERE codCliente = cliente.codCliente) AS cantidad_autos,
+        (SELECT COUNT(*) FROM cita WHERE codCliente = cliente.codCliente) AS cantidad_citas
+    FROM 
+        cliente;
+END //
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE ObtenerProveedoresYUtensilios()
+BEGIN
+    SELECT 
+        proveedor.codProveedor,
+        proveedor.nombre AS nombre_proveedor,
+        utensilio.codUtensilio,
+        utensilio.nombre AS nombre_utensilio,
+        proveedor_utensilio.cantidad,
+        proveedor_utensilio.fecha,
+        proveedor_utensilio.total
+    FROM 
+        proveedor
+    INNER JOIN 
+        proveedor_utensilio ON proveedor.codProveedor = proveedor_utensilio.codProveedor
+    INNER JOIN 
+        utensilio ON proveedor_utensilio.codUtensilio = utensilio.codUtensilio;
+END //
+
+DELIMITER ;
+

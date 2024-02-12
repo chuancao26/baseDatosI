@@ -1,0 +1,44 @@
+{% extends './base.html' %}
+{% block title %}Empleados{% endblock %}
+{% block customCSS %}
+{% endblock %}
+{% block body %}
+<div class="container mt-5">
+    <h2 class="mb-4">Empleados</h2>
+    <a href="{{ url_for('formEmpleado') }}" class="btn btn-primary">Insertar</a>
+    <div class="mb-3">
+        <a href="{{url_for('panelAdmin')}}" class="btn btn-secondary">Atrás</a>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for empleado in data %}
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ empleado.nombres }} {{ empleado.primerApellido }} {{ empleado.segundoApellido }}</h5>
+                    <p class="card-text">DNI: {{ empleado.DNI }}</p>
+                    <p class="card-text">Fecha de Nacimiento: {{ empleado.fecNacimiento }}</p>
+                    <p class="card-text">Sexo: {{ empleado.sexo }}</p>
+                    <p class="card-text">Teléfono: {{ empleado.telefono }}</p>
+                    <p class="card-text">Correo Electrónico: {{ empleado.correo }}</p>
+                    <p class="card-text">Dirección: {{ empleado.direccion }}</p>
+                    <p class="card-text">Salario: {{ empleado.salario }}</p>
+                    <p class="card-text">Puesto: {{ empleado.puesto }}</p>
+                    <p class="card-text">Años de Experiencia: {{ empleado.aniosExperiencia }}</p>
+                    <p class="card-text">Código de Horario: {{ empleado.codHorario }}</p>
+                    <a href="{{ url_for('modEmpleado', DNI=empleado.DNI) }}" class="btn btn-primary">Modificar</a>
+                    <a href="{{ url_for('delEmpleado', DNI=empleado.DNI) }}" class="btn btn-danger">Eliminar</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script>
+    function goBack() {
+      window.history.back();
+    }
+</script>
+{% endblock %}

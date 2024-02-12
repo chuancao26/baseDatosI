@@ -1,34 +1,179 @@
 {% extends './base.html' %}
-{%block title%}Panel Admin{% endblock %}
+{% block title %}Panel Admin{% endblock %}
 {% block customCSS %}
-<link rel="stylesheet" href="{{url_for('static',filename='css/panelAdmin.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/panelAdmin.css') }}">
+<style>
+    .dashboard-container {
+        background-color: #e9d57c;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+</style>
 {% endblock %}
 {% block body %}
-<div>
-    <h1>Admin</h1>
-</div>
-<div class="container">
-    <div class="dashboard">
-        <a href="{{url_for('readMaquina')}}" class="btn btn-primary dashboard-button">
-            <img src="..\static\images\maquinaria.png" alt="Máquinas">
-            <div>MÁQUINAS</div>
-        </a> 
-        <a href="{{url_for('readUtensilio')}}" class="btn btn-primary dashboard-button">
-            <img src="..\static\images\detergente.png" alt="Utensilios">
-            <div>UTENSILIOS</div>
-        </a> 
-        <a href="{{url_for('readServicio')}}" class="btn btn-primary dashboard-button">
-            <img src="..\static\images\soporte-tecnico.png" alt="Servicios">
-            <div>SERVICIOS</div>
-        </a> 
-        <a href="{{url_for('readAuto')}}" class="btn btn-primary dashboard-button">
-            <img src="..\static\images\coche.png" alt="Autos">
-            <div>AUTOS</div>
-        </a>
-        <a href="{{url_for('logout')}}" class="btn btn-danger dashboard-button">
-            <img src="..\static\images\cerrar-sesion.png" alt="Cerrar sesión">
-            <div>LOGOUT</div>
-        </a> 
+<body style="background-color: #e7f0c1;">
+    <div>
+        <h1>Admin</h1>
     </div>
-</div>
+    <div class="container">
+        <div class="dashboard-container">
+            <div class="dashboard">
+                <a href="{{ url_for('readMaquina') }}" class="btn btn-primary dashboard-button">
+                    <img src="..\static\images\maquinaria.png" alt="Máquinas">
+                    <div>MÁQUINAS</div>
+                </a> 
+                <a href="{{ url_for('readUtensilio') }}" class="btn btn-primary dashboard-button">
+                    <img src="..\static\images\detergente.png" alt="Utensilios">
+                    <div>UTENSILIOS</div>
+                </a> 
+                <a href="{{ url_for('readServicio') }}" class="btn btn-primary dashboard-button">
+                    <img src="..\static\images\soporte-tecnico.png" alt="Servicios">
+                    <div>SERVICIOS</div>
+                </a> 
+                <a href="{{ url_for('readAuto') }}" class="btn btn-primary dashboard-button">
+                    <img src="..\static\images\coche.png" alt="Autos">
+                    <div>AUTOS</div>
+                </a>
+                <a href="{{ url_for('logout') }}" class="btn btn-danger dashboard-button">
+                    <img src="..\static\images\cerrar-sesion.png" alt="Cerrar sesión">
+                    <div>LOGOUT</div>
+                </a> 
+            </div>
+        </div>
+        <div>
+            <h2>Reportes</h2>
+        </div>
+        <div class="btn-group" role="group" aria-label="Botones de reportes">
+            <button id="btnClientes" class="btn btn-primary" onclick="toggleListado('data1')">Clientes</button>
+            <button id="btnProveedores" class="btn btn-primary" onclick="toggleListado('data2')">Proveedores</button>
+            <button id="btnEmpleados" class="btn btn-primary" onclick="toggleListado('data3')">Empleados</button>
+        </div>
+        <div id="data1" style="display: none;">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombres</th>
+                        <th>DNI</th>
+                        <th>Telefono</th>
+                        <th>Correo</th>
+                        <th>Cantidad autos</th>
+                        <th>Cantidad citas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in data1 %}
+                    <tr>
+                        <td>{{ i[0] }}</td>
+                        <td>{{ i[1] }}</td>
+                        <td>{{ i[2] }}</td>
+                        <td>{{ i[3] }}</td>
+                        <td>{{ i[4] }}</td>
+                        <td>{{ i[5] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div id="data2" style="display: none;">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Cod. proveedor</th>
+                        <th>Nombre proveedor</th>
+                        <th>Cod. utensilio</th>
+                        <th>Nombre Utensilio</th>
+                        <th>Cantidad</th>
+                        <th>Fecha</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in data2 %}
+                    <tr>
+                        <td>{{ i[0] }}</td>
+                        <td>{{ i[1] }}</td>
+                        <td>{{ i[2] }}</td>
+                        <td>{{ i[3] }}</td>
+                        <td>{{ i[4] }}</td>
+                        <td>{{ i[5] }}</td>
+                        <td>{{ i[6] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div id="data3" style="display: none;">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>DNI</th>
+                        <th>Nombre</th>
+                        <th>Dirección</th>
+                        <th>Puesto</th>
+                        <th>Salario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in data3 %}
+                    <tr>
+                        <td>{{ i[0] }}</td>
+                        <td>{{ i[1] }}</td>
+                        <td>{{ i[2] }}</td>
+                        <td>{{ i[3] }}</td>
+                        <td>{{ i[4] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+{% endblock %}
+{% block script %}
+<script>
+    function toggleListado(listadoId) {
+        var listadoDiv = document.getElementById(listadoId);
+        var otrosListados = document.querySelectorAll('[id^=data]');
+        for (var i = 0; i < otrosListados.length; i++) {
+            if (otrosListados[i].id !== listadoId) {
+                otrosListados[i].style.display = "none";
+            }
+        }
+        listadoDiv.style.display = (listadoDiv.style.display === "none") ? "block" : "none";
+    }
+</script>
+<script>
+ 
+    function cambiarColorBoton(idBoton) {
+
+        document.getElementById('btnClientes').classList.remove('btn-success'); 
+        document.getElementById('btnProveedores').classList.remove('btn-success'); 
+        document.getElementById('btnEmpleados').classList.remove('btn-success'); 
+        
+        document.getElementById(idBoton).classList.add('btn-success'); 
+    }
+
+    function toggleListado(idListado) {
+        var listadoDiv = document.getElementById(idListado);
+        var otrosListados = document.querySelectorAll('[id^=data]');
+
+        if (idListado === 'data1') {
+            cambiarColorBoton('btnClientes');
+        } else if (idListado === 'data2') {
+            cambiarColorBoton('btnProveedores');
+        } else if (idListado === 'data3') {
+            cambiarColorBoton('btnEmpleados');
+        }
+
+        for (var i = 0; i < otrosListados.length; i++) {
+            if (otrosListados[i].id !== idListado) {
+                otrosListados[i].style.display = "none";
+            }
+        }
+        
+        listadoDiv.style.display = (listadoDiv.style.display === "none") ? "block" : "none";
+    }
+</script>
+
 {% endblock %}
