@@ -65,15 +65,15 @@
         <label for="hora">Hora:</label>
         <input type="time" id="hora" name="hora" required>
         <label for="progreso">Metodo de pago:</label>
-        <input type="text" id="progreso" name="progreso">
-        <label for="carros">Cantidad de Carros:</label>
-        <select id="can_carros" name="Cantidad_Carros" required>
-            <option value="">Seleccione...</option>
-            {% for j in range(11) %}
-                <option value="{{ j }}">{{ j }}</option>
-            {% endfor %}
+        <select id="progreso" name="progreso" required>
+            <option value="pendiente">Seleccione...</option>
+            <option value="efectivo">Efectivo</option>
+            <option value="tarjeta">Tarjeta de crédito/débito</option>
+            <option value="transferencia">Transferencia bancaria</option>
+            <option value="yape">Yape</option>
         </select>
         <input type="submit" value="Crear Cita">
+        <a href="{{ url_for('start_client') }}" class="btn btn-primary">Regresar</a>
     </form>
 </div>
 {% endblock %}

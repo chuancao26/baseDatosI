@@ -45,7 +45,8 @@
         {% endfor %}
     </div>
 </div>
-<a href="{{ url_for('start_client') }}">Regresar</a>
-<a href="{{ url_for('start_client_auto_register') }}">Registrar Nuevo Auto</a>
-<a href="{{ url_for('start_cita') }}">Realizar Cita</a>
+<a href="{{ url_for('start_client') }}" class="btn btn-primary">Regresar</a>
+<a href="{{ url_for('start_client_auto_register') }}" class="btn btn-success">Registrar Nuevo Auto</a>
+<a href="{{ url_for('start_cita') }}" class="btn btn-info">Realizar Cita</a>
+
 {% endblock %}

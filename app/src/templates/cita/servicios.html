@@ -7,25 +7,38 @@
 {% block customCSS %}
 <style>
     body {
-        background-color: #000; /* Fondo negro */
+        background-color: #f8f9fa; /* Cambio de fondo a un tono gris claro */
         font-family: Arial, sans-serif; /* Cambia la fuente si lo deseas */
         margin: 0; /* Elimina el margen predeterminado del cuerpo */
         padding: 0; /* Elimina el relleno predeterminado del cuerpo */
     }
     .servicio {
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 10px;
-        margin-bottom: 10px;
+        border: 1px solid #dee2e6; /* Borde más suave */
+        border-radius: 15px; /* Bordes más redondeados */
+        padding: 20px; /* Espaciado interno aumentado */
+        margin-bottom: 30px; /* Aumento del espacio entre las tarjetas */
         display: flex;
         background-color: #fff; /* Fondo blanco para cada servicio */
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Sombra suave para efecto de elevación */
+        transition: transform 0.3s; /* Transición suave al pasar el mouse */
+    }
+    .servicio:hover {
+        transform: translateY(-5px); /* Efecto de levantamiento al pasar el mouse */
     }
     .imagen {
-        flex: 0 0 100px; /* Tamaño fijo para las imágenes */
-        margin-right: 10px;
+        flex: 0 100 250px; /* Ancho fijo para la imagen */
+        height: 200px;
+        margin-right: 20px;
+        border-radius: 10px; /* Bordes redondeados para la imagen */
+        overflow: hidden; /* Evita que la imagen sobresalga del contenedor */
+        overflow: hidden; /* Evita que la imagen sobresalga del contenedor */
+        display: flex; /* Cambiar a display flex */
+        justify-content: center; /* Centrar horizontalmente */
+        align-items: center; /* Centrar verticalmente */
+
     }
     .imagen img {
-        width: 100%; /* Hace que la imagen ocupe todo el ancho del contenedor */
+        width: 100%; /* Imagen ocupa todo el ancho del contenedor */
         height: auto; /* Mantiene la proporción de aspecto */
     }
     .informacion {
@@ -36,30 +49,34 @@
         color: #fff;
         border: none;
         border-radius: 5px;
-        padding: 5px 10px;
+        padding: 10px 20px; /* Espaciado interno del botón */
         text-decoration: none;
+        display: inline-block; /* Para que el botón se ajuste al contenido */
+        margin-top: 10px; /* Espacio entre el contenido y el botón */
+        transition: background-color 0.3s; /* Transición suave al pasar el mouse */
+    }
+    .boton:hover {
+        background-color: #0056b3; /* Cambio de color al pasar el mouse */
     }
 </style>
 {% endblock %}
 
 {% block body %}
-    <h1>Servicios</h1>
-    {% for servicio in servicios %}
-        <div class="servicio">
-            <div class="imagen">
-                <img src="https://cdn.venngage.com/template/thumbnail/310/eee1331f-a600-4fd0-87bb-9aeada855627.webp" alt="{{ servicio[1] }}">
+    <h1 class="text-center">Servicios</h1>
+    <div class="container">
+        {% for servicio in servicios %}
+            <div class="servicio">
+                <div class="imagen">
+                    <img src="{{ servicio[5] }}" alt="{{ servicio[1] }}">
+                </div>
+                <div class="informacion">
+                    <h2>{{ servicio[1] }}</h2>
+                    <p>Precio: ${{ servicio[2] }}</p>
+                    <p>Duración: {{ servicio[3] }}</p>
+                    <p>Descripción: {{ servicio[4] }}</p>
+                    <a href="{{ url_for('start_factura', codServicio=servicio[0]) }}" class="boton">Ver Detalles</a>
+                </div>
             </div>
-            <div class="informacion">
-                <h2>{{ servicio[1] }}</h2>
-                <p>Precio: ${{ servicio[2] }}</p>
-                <p>Duración: {{ servicio[3] }}</p>
-                <p>Descripcion: {{ servicio[4] }}</p>
-                <a href="{{ url_for('start_factura', codServicio=servicio[0]) }}" class="boton">Ver Detalles</a>
-            </div>
-        </div>
-    {% endfor %}
-{% endblock %}
-
-{% block script %}
-    <!-- Puedes agregar aquí cualquier script específico para esta página -->
+        {% endfor %}
+    </div>
 {% endblock %}

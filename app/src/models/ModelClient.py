@@ -54,3 +54,14 @@ class ModelClient():
             db.connection.rollback()
             raise Exception(ex)
 
+    
+    @classmethod
+    def citas(cls, db, dni):
+        try:
+            cursor = db.connection.cursor()
+            sql = "call VerCitasPorDNI(%s)"
+            cursor.execute(sql, (dni,))
+            data = cursor.fetchall()
+            return data
+        except Exception as ex:
+            raise Exception(ex)

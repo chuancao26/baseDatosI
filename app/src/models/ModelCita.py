@@ -3,24 +3,13 @@ class ModelCita():
     def data_service(cls,db):
         try:
             cursor = db.connection.cursor()
-            sql = "SELECT * FROM servicio"
+            sql = "call GetAllServicios()"
             cursor.execute(sql)
             data = cursor.fetchall()
             return data
         except Exception as ex:
             raise Exception(ex)
 
-    @classmethod
-    def boleta(cls,db,codServicio):
-        try:
-            cursor = db.connection.cursor()
-            sql = "SELECT * FROM servicio WHERE codServicio = (%s)"
-            cursor.execute(sql,(codServicio,))
-            data = cursor.fetchall()
-            return data
-        except Exception as ex:
-            raise Exception(ex)
-        
     @classmethod
     def guardar_cita(cls, db, codCita, codCliente, codServicio, fecha, hora, progreso):
         try:

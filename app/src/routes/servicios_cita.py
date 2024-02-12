@@ -30,10 +30,8 @@ def servicio_route(app, db):
         
         try:
             ModelCita.guardar_cita(db, codCita, codCliente, codServicio, fecha, hora, progreso)
-            flash('Cita creada exitosamente', 'success')
             return redirect(url_for('start_factura_view'))  # Redirige a la página de registro exitoso
         except Exception as ex:
-            flash('Error al crear la cita', 'error')
             return redirect(url_for('crear_cita'))  # Otra opción de manejo de error
         
     @app.route("/logear/client/registro_exitoso", methods=['GET'])
