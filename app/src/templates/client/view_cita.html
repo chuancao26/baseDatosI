@@ -1,0 +1,67 @@
+{% extends './base.html' %}
+
+{% block title %}
+    Cliente
+{% endblock %}
+
+{% block customCSS %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body, html {
+            height: 100%;
+        }
+        .center-content {
+            text-align: center;
+            margin-top: 50px; /* Ajusta el margen superior para centrar en la página */
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<h1 class="center-content">Mis Citas</h1>
+    <div class="container mt-3">
+        <div class="card card-sm mb-3">
+            <div class="card-body card-body-sm">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Codigo Cita</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Progreso</th>
+                            <th>Servicio</th>
+                            <th>Precio</th>
+                            <th>Duracion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for factura in dato %}
+                            <tr>
+                                <td>{{ factura[0] }}</td> 
+                                <td>{{ factura[1] }}</td>
+                                <td>{{ factura[2] }}</td>
+                                <td>{{ factura[3] }}</td>
+                                <td>{{ factura[7] }}</td> 
+                                <td>{{ factura[8] }}</td>
+                                <td>{{ factura[9] }}</td> 
+                                
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <a href="{{ url_for('start_client') }}" class="btn btn-primary">Regresar</a> <!-- Cambiado el color del botón -->
+                <a href="{{ url_for('start_client_auto_register') }}" class="btn btn-success ml-2">Registrar Nuevo Auto</a> <!-- Cambiado el color del botón -->
+                <a href="{{ url_for('start_client') }}" class="btn btn-info ml-2">Realizar Cita</a> <!-- Cambiado el color del botón -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}

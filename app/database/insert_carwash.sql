@@ -181,27 +181,34 @@ INSERT INTO `representante` (`codRepresentante`, `DNI`, `nombres`, `primerApelli
 	('19', '19191919', 'Ricardo', 'Paz', 'Morón', '1999-11-14', 'Masculino', '205896520', 'ricardo@gmail.com', 'av. independencia'),
 	('20', '20202020', 'Mariana', 'Jimenez', 'Ramirez', '1999-08-18', 'Femenino', '123478589', 'mariana@gmail.com', 'av. los toritos');
 
+DELIMITER //
+CREATE PROCEDURE GetAllServicios()
+BEGIN
+    SELECT * FROM servicio;
+END//
+DELIMITER ;
 INSERT INTO `servicio` (`codServicio`, `nombre`, `descripcion`, `url_imagen`, `precio`, `duracion`) VALUES
-	(1, 'Lavado Básico Auto', 'Lavado exterior básico para automóviles', 'imagen_basico_auto.jpg', 30, '0:20:0'),
-	(2, 'Lavado Premium Auto', 'Lavado completo para automóviles con productos de alta calidad', 'imagen_premium_auto.jpg', 50, '0:40:0'),
-	(3, 'Lavado Express Camioneta', 'Lavado rápido para camionetas', 'imagen_express_camioneta.jpg', 45, '0:20:0'),
-	(4, 'Lavado de Lujo Minivan', 'Lavado detallado y completo para minivans', 'imagen_lujo_minivan.jpg',  70, '01:20:00'),
-	(5, 'Lavado VIP Van', 'Lavado exclusivo y detallado para vans de lujo', 'imagen_vip_van.jpg', 70, '01:30:00'),
-	(6, 'Lavado Básico Van', 'Lavado exterior básico para vans', 'imagen_basico_van.jpg',  50, '0:30:0'),
-	(7, 'Lavado Simple Minivan', 'Lavado rápido y básico para minivans', 'imagen_simple_minivan.jpg', 50, '0:30:0'),
-	(8, 'Lavado Desinfectante', 'Lavado con productos desinfectantes para una limpieza profunda', 'imagen_desinfectante.jpg', 100, '0:40:0'),
-	(9, 'Lavado Motor', 'Lavado del motor para mantenerlo limpio y en buen estado', 'imagen_lavado_motor.jpg', 100, '0:30:0'),
-	(10, 'Lavado Motor Minivan', 'Lavado del motor para minivans', 'imagen_lavado_motor_minivan.jpg', 100, '0:50:0'),
-	(11, 'Lavado Motor Van', 'Lavado del motor para vans', 'imagen_lavado_motor_van.jpg',  130, '01:10:00'),
-	(12, 'Lavado Aromatizante', 'Lavado con aromatización para un olor fresco y agradable', 'imagen_aromatizante.jpg', 30, '0:30:0'),
-	(13, 'Lavado VIP Camioneta', 'Lavado detallado y exclusivo para camionetas de lujo', 'imagen_vip_camioneta.jpg', 50, '0:45:0'),
-	(14, 'Autolavado', 'Lavado automático para un proceso rápido y eficiente', 'imagen_autolavado.jpg', 30, '0:20:0'),
-	(15, 'Lavado solo carroceria', 'Lavado enfocado solo en la carrocería del vehículo', 'imagen_carroceria.jpg', 30, '0:30:0'),
-	(16, 'Lavado tapiceria Auto', 'Lavado profundo de la tapicería para automóviles', 'imagen_tapiceria_auto.jpg', 50, '0:50:0'),
-	(17, 'Lavado tapiceria Camioneta', 'Lavado de la tapicería para camionetas', 'imagen_tapiceria_camioneta.jpg', 50, '0:50:0'),
-	(18, 'Lavado tapiceria Minivan', 'Lavado de la tapicería para minivans', 'imagen_tapiceria_minivan.jpg', 50, '0:50:0'),
-	(19, 'Lavado tapiceria Van', 'Lavado de la tapicería para vans', 'imagen_tapiceria_van.jpg', 70, '01:20:00'),
-	(20, 'Lavado ecológico', 'Lavado con productos ecológicos y amigables con el medio ambiente', 'imagen_ecologico.jpg', 70, '01:30:00');
+    (1, 'Lavado Básico Auto', 'Lavado exterior básico para automóviles', 'https://ecowashcar.cl/wp-content/uploads/2020/11/iStock-530505526-1024x684.jpg', 30, '0:20:0'),
+    (2, 'Lavado Premium Auto', 'Lavado completo para automóviles con productos de alta calidad', 'https://media-cdn.tripadvisor.com/media/photo-s/15/d5/4c/d5/alquiler-de-cocheras.jpg', 50, '0:40:0'),
+    (3, 'Lavado Express Camioneta', 'Lavado rápido para camionetas', 'https://i.ytimg.com/vi/DeYm34XV0_k/maxresdefault.jpg', 45, '0:20:0'),
+    (4, 'Lavado de Lujo Minivan', 'Lavado detallado y completo para minivans', 'https://www.shutterstock.com/image-photo/driver-pressure-washing-his-company-600nw-1780918175.jpg',  70, '01:20:00'),
+    (5, 'Lavado VIP Van', 'Lavado exclusivo y detallado para vans de lujo', 'https://funcar.pe/cdn/shop/products/T-HYU-00129_1.jpg?v=1678315983', 70, '01:30:00'),
+    (6, 'Lavado Básico Van', 'Lavado exterior básico para vans', 'https://thumbs.dreamstime.com/b/gran-auto-en-minivan-lavado-con-jab%C3%B3n-y-espuma-el-lavadero-de-carros-garaje-lavan-coche-miniv%C3%A1n-del-173214921.jpg',  50, '0:30:0'),
+    (7, 'Lavado Simple Minivan', 'Lavado rápido y básico para minivans', 'https://lirp.cdn-website.com/47ed515f/dms3rep/multi/opt/iStock-1287044692-e10bff70-640w.jpeg', 50, '0:30:0'),
+    (8, 'Lavado Desinfectante', 'Lavado con productos desinfectantes para una limpieza profunda', 'https://lirp.cdn-website.com/47ed515f/dms3rep/multi/opt/iStock-1287044692-e10bff70-640w.jpeg', 100, '0:40:0'),
+    (9, 'Lavado Motor', 'Lavado del motor para mantenerlo limpio y en buen estado', 'https://elcomercio.pe/resizer/Iu7RvHs2FEEOtKImUb8UKLlb5Ak=/1200x900/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/Q2KHYE7QIJABJDBOS5HMAEOKQU.jpg', 100, '0:30:0'),
+    (10, 'Lavado Motor Minivan', 'Lavado del motor para minivans', 'https://elcomercio.pe/resizer/Iu7RvHs2FEEOtKImUb8UKLlb5Ak=/1200x900/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/Q2KHYE7QIJABJDBOS5HMAEOKQU.jpg', 100, '0:50:0'),
+    (11, 'Lavado Motor Van', 'Lavado del motor para vans', 'https://elcomercio.pe/resizer/Iu7RvHs2FEEOtKImUb8UKLlb5Ak=/1200x900/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/Q2KHYE7QIJABJDBOS5HMAEOKQU.jpg',  130, '01:10:00'),
+    (12, 'Lavado Aromatizante', 'Lavado con aromatización para un olor fresco y agradable', 'https://ecowashcar.cl/wp-content/uploads/2020/11/iStock-530505526-1024x684.jpg', 30, '0:30:0'),
+    (13, 'Lavado VIP Camioneta', 'Lavado detallado y exclusivo para camionetas de lujo', 'https://funcar.pe/cdn/shop/products/T-HYU-00129_1.jpg?v=1678315983', 50, '0:45:0'),
+    (14, 'Autolavado', 'Lavado automático para un proceso rápido y eficiente', 'https://lirp.cdn-website.com/47ed515f/dms3rep/multi/opt/iStock-1287044692-e10bff70-640w.jpeg', 30, '0:20:0'),
+    (15, 'Lavado solo carroceria', 'Lavado enfocado solo en la carrocería del vehículo', 'https://lirp.cdn-website.com/47ed515f/dms3rep/multi/opt/iStock-1287044692-e10bff70-640w.jpeg', 30, '0:30:0'),
+    (16, 'Lavado tapiceria Auto', 'Lavado profundo de la tapicería para automóviles', 'https://rentingfinders.com/wp-content/uploads/2020/05/limpiar-tapiceria-coche-1024x683.jpg', 50, '0:50:0'),
+    (17, 'Lavado tapiceria Camioneta', 'Lavado de la tapicería para camionetas', 'https://rentingfinders.com/wp-content/uploads/2020/05/limpiar-tapiceria-coche-1024x683.jpg', 50, '0:50:0'),
+    (18, 'Lavado tapiceria Minivan', 'Lavado de la tapicería para minivans', 'https://rentingfinders.com/wp-content/uploads/2020/05/limpiar-tapiceria-coche-1024x683.jpg', 50, '0:50:0'),
+    (19, 'Lavado tapiceria Van', 'Lavado de la tapicería para vans', 'https://rentingfinders.com/wp-content/uploads/2020/05/limpiar-tapiceria-coche-1024x683.jpg', 70, '0:29:0'),
+	(20, 'Lavado ecológico', 'Lavado con productos ecológicos y amigables con el medio ambiente', 'https://i.pinimg.com/originals/6d/c9/33/6dc933590892b1c7950b5db2f1ede83d.jpg', 70, '01:30:00');
+
 
 INSERT INTO `cita` (`codCita`, `fecha`, `hora`, `progreso`, `codCliente`, `codServicio`) VALUES
 	('1', '2023-12-10', '08:30', 'Terminada', '1', '1'),

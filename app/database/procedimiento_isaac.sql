@@ -418,3 +418,148 @@ END //
 
 DELIMITER ;
 
+drop procedure if exists ObtenerInformacionClientes;
+drop procedure if exists ObtenerProveedoresYUtensilios;
+drop procedure if exists ObtenerEmpleados;
+DELIMITER //
+CREATE PROCEDURE ObtenerInformacionClientes()
+BEGIN
+    SELECT 
+        CONCAT(nombres, ' ', primerApellido, ' ', segundoApellido ) as Nombres,
+        DNI,
+        telefono,
+        correo,
+        (SELECT COUNT(*) FROM auto WHERE codCliente = cliente.codCliente) AS cantidad_autos,
+        (SELECT COUNT(*) FROM cita WHERE codCliente = cliente.codCliente) AS cantidad_citas
+    FROM 
+        cliente;
+END //
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE ObtenerProveedoresYUtensilios()
+BEGIN
+    SELECT 
+        proveedor.codProveedor,
+        proveedor.nombre AS nombre_proveedor,
+        utensilio.codUtensilio,
+        utensilio.nombre AS nombre_utensilio,
+        proveedor_utensilio.cantidad,
+        proveedor_utensilio.fecha,
+        proveedor_utensilio.total
+    FROM 
+        proveedor
+    INNER JOIN 
+        proveedor_utensilio ON proveedor.codProveedor = proveedor_utensilio.codProveedor
+    INNER JOIN 
+        utensilio ON proveedor_utensilio.codUtensilio = utensilio.codUtensilio;
+END //
+
+DELIMITER ;
+DELIMITER //
+
+CREATE PROCEDURE ObtenerEmpleados()
+BEGIN
+    SELECT 
+        DNI,
+        CONCAT(nombres, ' ', primerApellido, ' ', segundoApellido) AS nombre_completo,
+        direccion,
+        puesto,
+        salario
+    FROM 
+        empleado;
+END //
+
+DELIMITER ;
+
+
+DELIMITER //
+
+CREATE PROCEDURE MostrarEmpleadoU(IN codEmpleado INT)
+BEGIN
+    SELECT e.codEmpleado, e.DNI, e.nombres, e.primerApellido, e.segundoApellido, e.fecNacimiento, e.sexo, e.telefono, e.correo, e.direccion, e.salario, e.puesto, e.aniosExperiencia, h.turno
+    FROM empleado e
+    INNER JOIN horario h ON e.codHorario = h.codHorario
+    WHERE e.codEmpleado = codEmpleado;
+END //
+
+DELIMITER ;
+DELIMITER //
+
+CREATE PROCEDURE ActualizarEmpleado(
+    IN p_codEmpleado INT,
+    IN p_DNI CHAR(8),
+    IN p_nombres VARCHAR(50),
+    IN p_primerApellido VARCHAR(30),
+    IN p_segundoApellido VARCHAR(30),
+    IN p_fecNacimiento DATE,
+    IN p_sexo CHAR(10),
+    IN p_telefono CHAR(12),
+    IN p_correo VARCHAR(100),
+    IN p_direccion VARCHAR(100),
+    IN p_salario DECIMAL(10,2),
+    IN p_puesto VARCHAR(20),
+    IN p_aniosExperiencia INTEGER,
+    IN p_codHorario INTEGER
+)
+BEGIN
+    UPDATE empleado
+    SET DNI = p_DNI,
+        nombres = p_nombres,
+        primerApellido = p_primerApellido,
+        segundoApellido = p_segundoApellido,
+        fecNacimiento = p_fecNacimiento,
+        sexo = p_sexo,
+        telefono = p_telefono,
+        correo = p_correo,
+        direccion = p_direccion,
+        salario = p_salario,
+        puesto = p_puesto,
+        aniosExperiencia = p_aniosExperiencia,
+        codHorario = p_codHorario
+    WHERE codEmpleado = p_codEmpleado;
+END //
+
+DELIMITER ;
+DELIMITER //
+
+CREATE PROCEDURE BorrarEmpleado(IN p_codEmpleado INT)
+BEGIN
+    DELETE FROM empleado WHERE codEmpleado = p_codEmpleado;
+END //
+
+DELIMITER ;
+DELIMITER //
+
+CREATE PROCEDURE MostrarEmpleado()
+BEGIN
+    SELECT e.codEmpleado, e.DNI, e.nombres, e.primerApellido, e.segundoApellido, e.fecNacimiento, e.sexo, e.telefono, e.correo, e.direccion, e.salario, e.puesto, e.aniosExperiencia, e.codHorario FROM empleado e;
+END //
+
+DELIMITER ;
+DELIMITER //
+
+CREATE PROCEDURE InsertarEmpleado(
+    IN p_DNI CHAR(8),
+    IN p_nombres VARCHAR(50),
+    IN p_primerApellido VARCHAR(30),
+    IN p_segundoApellido VARCHAR(30),
+    IN p_fecNacimiento DATE,
+    IN p_sexo CHAR(10),
+    IN p_telefono CHAR(12),
+    IN p_correo VARCHAR(100),
+    IN p_direccion VARCHAR(100),
+    IN p_salario DECIMAL(10,2),
+    IN p_puesto VARCHAR(20),
+    IN p_aniosExperiencia INTEGER,
+    IN p_codHorario INTEGER
+)
+BEGIN
+    DECLARE id INT;
+    SET id = Ultimo_Id_Empleado() + 1;
+    INSERT INTO empleado 
+    VALUES (id, p_DNI, p_nombres, p_primerApellido, p_segundoApellido, p_fecNacimiento, p_sexo, p_telefono, p_correo, p_direccion, p_salario, p_puesto, p_aniosExperiencia, p_codHorario);
+END //
+
+DELIMITER ;

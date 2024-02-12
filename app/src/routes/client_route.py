@@ -66,4 +66,8 @@ def configure_route_client(app,db):
             return redirect(url_for('start_client_auto_view'))
         return redirect(url_for('start_client_auto_view'))
 
-    
+    @app.route("/logear/client/cita-view", methods=['GET'])
+    @login_required
+    def start_client_cita_view():
+        info = ModelClient.citas(db, current_user.dni)
+        return render_template("client/view_cita.html", dato = info)

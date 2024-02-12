@@ -87,7 +87,7 @@ CREATE TABLE `servicio` (
 	`precio` DECIMAL(10,2),
 	`duracion` TIME,
 	`descripcion` VARCHAR(200),
-    `url_imagen` VARCHAR(150),
+    `url_imagen` VARCHAR(255),
   PRIMARY KEY (`codServicio`)
 );
 

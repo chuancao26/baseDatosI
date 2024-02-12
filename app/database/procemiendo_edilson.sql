@@ -137,3 +137,35 @@ BEGIN
 END
 //
 DELIMITER ;
+
+
+DELIMITER //
+
+CREATE PROCEDURE VerCitasPorDNI(
+    IN dni_cliente CHAR(8)
+)
+BEGIN
+    SELECT 
+        cita.codCita,
+        cita.fecha,
+        cita.hora,
+        cita.progreso,
+        cliente.nombres AS nombre_cliente,
+        cliente.primerApellido AS apellido_cliente,
+        cliente.segundoApellido AS segundo_apellido_cliente,
+        servicio.nombre AS nombre_servicio,
+        servicio.precio,
+        servicio.duracion
+    FROM 
+        cita
+    INNER JOIN 
+        cliente ON cita.codCliente = cliente.codCliente
+    INNER JOIN 
+        servicio ON cita.codServicio = servicio.codServicio
+    WHERE 
+        cliente.DNI = dni_cliente;
+END //
+
+DELIMITER ;
+
+

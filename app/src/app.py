@@ -35,6 +35,14 @@ def load_user(id):
     return Model.getById(conexion, id)
 
 @app.route('/')
+def comenzar():
+    return redirect(url_for('paginicio'))
+
+@app.route('/l')
+def login_ini():
+    return redirect(url_for('login'))
+
+@app.route('/login')
 def login():
     return render_template('login.html')
 
@@ -339,6 +347,9 @@ def modEmpleado(DNI):
 
 #---------------------------------------------------
 
+@app.route("/inicio", methods=['GET'])
+def paginicio():
+    return render_template("inicio.html")
 if __name__ == '__main__':
     app.config.from_object(config['development'])
     app.run()
