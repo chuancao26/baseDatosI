@@ -80,6 +80,10 @@ def insertCliente():
         flash("usuario ya registrado!")
         return render_template("formCliente.html")
     password = request.form['password']
+    confirmarPassword = request.form['confirmarPassword']
+    if password != confirmarPassword:
+        flash("Passwords no coinciden...")
+        return render_template("formCliente.html")
     if Model.insertCliente(conexion, dni, nombres, primerApellido, segundoApellido, fecNacimiento, sexo, telefono, correo, direccion, usuario, User.generate_password(password),password):
         return redirect(url_for('login'))
 
